@@ -19,13 +19,25 @@ export function CardElement({
     setAnswers(copy);
   };
 
-  const handleSubmit = (id) => {
+  const handleSubmit = (index, id) => {
     console.log("SUBMIT:", {
       id,
-      value: answers[id],
+      value: answers[index],
+      index
     });
 
+    const newArr = oneCard.rects.filter((item) => {
+      return item.id == id;
+    });
+
+    console.log(newArr[0].field1)
+    if(newArr[0].field1 == answers[index]){
+      console.log("Yes")
+    }
+
+
   };
+
 
   const deletePost = () => {
     console.log("delete post")
@@ -83,7 +95,7 @@ export function CardElement({
               />
               <button
                 className="submitBtn"
-                onClick={() => handleSubmit(index)}
+                onClick={() => handleSubmit(index, rect.id)}
               >
                 Submit
               </button>

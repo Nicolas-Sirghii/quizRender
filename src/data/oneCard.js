@@ -8,8 +8,8 @@ export const oneCard = {
       "y": 32.375379694755004,
       "width": 10.784818183059706,
       "height": 5.315396682152759,
-      "field1": "aaaaa",
-      "field2": "rrrrrrrrr"
+      "field1": "aa",
+      "field2": "duvleA"
     },
     {
       "id": 1777228534920.7014,

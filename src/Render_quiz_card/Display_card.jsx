@@ -1,30 +1,30 @@
 import { useState } from "react";
 import "./Display_card_styles.css"
+import { oneCard } from "../data/oneCard";
 
 export function CardElement({
   createdAt = new Date().toLocaleString(),
-  
+
+
   onSolveSubmit,
 }) {
-   
+
+
   const [expanded, setExpanded] = useState(false);
   const [answers, setAnswers] = useState(["", "", ""]);
 
-  const handleChange = (index, value) => {
+  const handleChange = (id, value) => {
     const copy = [...answers];
-    copy[index] = value;
+    copy[id] = value;
     setAnswers(copy);
   };
 
-  const handleSubmit = (index) => {
+  const handleSubmit = (id) => {
     console.log("SUBMIT:", {
-      index,
-      value: answers[index],
+      id,
+      value: answers[id],
     });
 
-    if (onSolveSubmit) {
-      onSolveSubmit(index, answers[index]);
-    }
   };
 
   const deletePost = () => {
@@ -33,7 +33,7 @@ export function CardElement({
   const updatePost = () => {
     console.log("update post")
   }
- 
+
 
   return (
     <div className="card">
@@ -73,17 +73,17 @@ export function CardElement({
       {/* EXPANDED AREA */}
       {expanded && (
         <div className="solveArea">
-          {[0, 1, 2].map((i) => (
-            <div key={i} className="inputRow">
+          {oneCard.rects.map((rect, index) => (
+            <div key={rect.id} className="inputRow">
               <input
                 className="input"
-                placeholder={`Answer ${i + 1}`}
-                value={answers[i]}
-                onChange={(e) => handleChange(i, e.target.value)}
+                placeholder={rect.field2}
+                value={answers[index] ?? ""}
+                onChange={(e) => handleChange(index, e.target.value)}
               />
               <button
                 className="submitBtn"
-                onClick={() => handleSubmit(i)}
+                onClick={() => handleSubmit(index)}
               >
                 Submit
               </button>

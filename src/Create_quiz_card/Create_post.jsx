@@ -1,12 +1,15 @@
-
+import { increment } from "../redux/slices/cardSlice"
+import { useDispatch, useSelector } from "react-redux"
 
 export function CreateCardElement() {
+  const { value } = useSelector((state) => state.card_state);
+  const dispatch = useDispatch();
 
   const deleteLastSquare = () => {
     console.log("dlelte last square")
   }
   const createNewCard = () => {
-    console.log("createNewCard")
+    dispatch(increment())
   }
 
   return (
@@ -22,10 +25,9 @@ export function CreateCardElement() {
         </button>
 
         <button className="btn solve" onClick={createNewCard}>
-          Create
+          {value}
         </button>
       </div>
-
     </div>
   );
 }

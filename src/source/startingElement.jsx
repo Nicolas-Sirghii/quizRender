@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 
 export function ImageCanvasEditor2() {
@@ -21,6 +21,10 @@ export function ImageCanvasEditor2() {
   const pointerId = useRef(null);
 
   const createId = () => Date.now() + Math.random();
+
+ 
+
+
 
   // ---------------- OVERLAY HOLD LOGIC ----------------
   const handleOverlayPointerDown = () => {
@@ -214,24 +218,12 @@ export function ImageCanvasEditor2() {
 
   return (
     <div
-      onPointerDown={handleOverlayPointerDown}
-      onPointerUp={handleOverlayPointerUp}
+      // onPointerDown={handleOverlayPointerDown}
+      // onPointerUp={handleOverlayPointerUp}
       style={{ position: "relative" }}
     >
-      <input type="file" onChange={handleImage} />
+      <input type="file"  onChange={handleImage} />
 
-      {/* OVERLAY */}
-      {overlay && (
-        <div
-          style={{
-            position: "fixed",
-            inset: 0,
-            backdropFilter: "blur(8px)",
-            background: "rgba(0,0,0,0.2)",
-            zIndex: 9999,
-          }}
-        />
-      )}
 
       {/* CANVAS */}
       <div

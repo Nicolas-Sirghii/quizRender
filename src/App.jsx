@@ -1,7 +1,9 @@
 
 import './App.css'
 
-import { ImageCanvasEditor2 } from './source/startingElement'
+// import { ImageCanvasEditor2 } from './source/startingElement'
+
+
 
 
 import { CreateCardElement } from './Create_quiz_card/Create_post'
@@ -12,7 +14,8 @@ function App() {
 
   return (
     <div className='app-container'>
-      <ImageCanvasEditor2 />
+      
+      {/* <ImageCanvasEditor2 /> */}
 
       <CreateCardElement />
       <CardElement />

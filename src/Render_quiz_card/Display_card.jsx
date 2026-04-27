@@ -1,14 +1,21 @@
 import { useState } from "react";
 import "./Display_card_styles.css"
-import { oneCard } from "../data/oneCard";
+
 import { SquaresLayout } from "./Display_squares/Display_squares";
+import { useDispatch, useSelector } from "react-redux";
+import { setAnswer } from "../redux/slices/cardSlice";
 
 export function CardElement({
+  
   createdAt = new Date().toLocaleString(),
 
 
   onSolveSubmit,
 }) {
+
+  const dispatch = useDispatch();
+  const { cards } = useSelector((state) => state.card_state);
+  const card = cards[0]
 
 
   const [expanded, setExpanded] = useState(false);
@@ -20,22 +27,15 @@ export function CardElement({
     setAnswers(copy);
   };
 
-  const handleSubmit = (index, id) => {
-    console.log("SUBMIT:", {
+  const handleSubmit = (index, id, cardId) => {
+    
+   dispatch(setAnswer({
       id,
       value: answers[index],
-      index
-    });
-
-    const newArr = oneCard.rects.filter((item) => {
-      return item.id == id;
-    });
-
-    console.log(newArr[0].field1)
-    if(newArr[0].field1 == answers[index]){
-      console.log("Yes")
-    }
-
+      index,
+      cardId
+    }))
+   setAnswers(["", "", ""])
 
   };
 
@@ -52,7 +52,7 @@ export function CardElement({
     <div className="card">
       {/* IMAGE */}
       <div className="imageWrapper">
-        <SquaresLayout data={oneCard}  />
+        <SquaresLayout data={card}  />
       </div>
 
       {/* INFO */}
@@ -86,7 +86,7 @@ export function CardElement({
       {/* EXPANDED AREA */}
       {expanded && (
         <div className="solveArea">
-          {oneCard.rects.map((rect, index) => (
+          {card.rects.map((rect, index) => (
             <div key={rect.id} className="inputRow">
               <input
                 className="input"
@@ -96,7 +96,7 @@ export function CardElement({
               />
               <button
                 className="submitBtn"
-                onClick={() => handleSubmit(index, rect.id)}
+                onClick={() => handleSubmit(index, rect.id, card.id)}
               >
                 Submit
               </button>

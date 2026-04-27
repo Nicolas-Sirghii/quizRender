@@ -130,7 +130,8 @@ export function ImageCanvasEditor() {
     <div
       style={{ position: "relative" }}
     >
-      <input type="file"  onChange={handleImage} />
+      {!image && <input type="file"  onChange={handleImage} />}
+      
 
 
       {/* CANVAS */}

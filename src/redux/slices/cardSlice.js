@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { postsArray } from "../../data/oneCard";
 
 const cardSlice = createSlice({
   name: "cardSlice",
   initialState: {
-    value: 0,
+    cards: postsArray,
     image: null,
     ratio: 2,
     rects: [],
@@ -20,15 +21,15 @@ const cardSlice = createSlice({
       state.ratio = action.payload;
     },
     setAddRect: (state, action) => {
-     state.rects = [...state.rects, action.payload];
-     
-    
+      state.rects = [...state.rects, action.payload];
+
+
     },
     setModifyRect: (state, action) => {
       const { mode, mx, my, start, offset } = action.payload;
       const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
-     
-       state.rects = state.rects.map((r) => {
+
+      state.rects = state.rects.map((r) => {
         if (r.id !== state.activeId) return r;
 
         if (mode.current === "draw") {
@@ -67,28 +68,58 @@ const cardSlice = createSlice({
 
         return r;
       })
-    
+
 
     },
     setFilterRect: (state) => {
       const prev = state.rects
       state.rects = prev.filter((r) => r.width > 1 && r.height > 1);
-       
+
     },
     setUpdateField: (state, action) => {
       const prev = state.rects;
-      const {id, field, value} = action.payload;
-       state.rects = prev.map((r) =>
+      const { id, field, value } = action.payload;
+      state.rects = prev.map((r) =>
         r.id === id ? { ...r, [field]: value } : r
       )
     },
     setActiveId: (state, action) => {
       state.activeId = action.payload;
+    },
+    setAnswer: (state, action) => {
+      const answer = state.cards.map((elem) => {
+        if (elem.id == action.payload.cardId) {
+          let deletedSomething = false;
+
+          elem.rects = elem.rects.filter((r) => {
+            const shouldDelete =
+              r.id === action.payload.id &&
+              action.payload.value === r.field1;
+
+            if (shouldDelete) {
+              deletedSomething = true;
+            }
+
+            return !shouldDelete;
+          });
+
+          // 👉 run ONCE
+          if (deletedSomething) {
+            console.log("Something was deleted");
+          } else {
+            console.log("Nothing matched");
+          }
+          // const a = elem.rects.filter((r) => r.id == action.payload.id && action.payload.value == r.field1)
+          // console.log(action.payload.id)
+          // console.log(JSON.parse(JSON.stringify(a)))
+        }
+
+      })
     }
   },
 });
 
 export const { increment, setImage, setRatio, setAddRect, setModifyRect,
-setFilterRect, setUpdateField, setActiveId
- } = cardSlice.actions;
+  setFilterRect, setUpdateField, setActiveId, setAnswer
+} = cardSlice.actions;
 export default cardSlice.reducer;

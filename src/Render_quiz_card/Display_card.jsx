@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./Display_card_styles.css"
 import { oneCard } from "../data/oneCard";
+import { SquaresLayout } from "./Display_squares/Display_squares";
 
 export function CardElement({
   createdAt = new Date().toLocaleString(),
@@ -51,7 +52,7 @@ export function CardElement({
     <div className="card">
       {/* IMAGE */}
       <div className="imageWrapper">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZLWKJBYIyWPCVVi2ZtdZ_TLu2Cfs4n5hg5Q&s" alt="card" className="image" />
+        <SquaresLayout data={oneCard}  />
       </div>
 
       {/* INFO */}

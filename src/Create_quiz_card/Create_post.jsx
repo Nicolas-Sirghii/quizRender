@@ -1,22 +1,34 @@
-import { increment } from "../redux/slices/cardSlice"
-import { useDispatch, useSelector } from "react-redux"
+
+import {  useSelector } from "react-redux"
+import { ImageCanvasEditor } from "./canvas/Canvas";
 
 export function CreateCardElement() {
-  const { value } = useSelector((state) => state.card_state);
-  const dispatch = useDispatch();
+  const { image, ratio, rects } = useSelector((state) => state.card_state);
+  
 
   const deleteLastSquare = () => {
     console.log("dlelte last square")
   }
   const createNewCard = () => {
-    dispatch(increment())
+    console.log(
+      JSON.stringify(
+        {
+          image,
+          ratio,
+          rects,
+        },
+        null,
+        2
+      )
+    );
   }
+
 
   return (
     <div className="card">
 
       <div className="imageWrapper">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZLWKJBYIyWPCVVi2ZtdZ_TLu2Cfs4n5hg5Q&s" alt="card" className="image" />
+        <ImageCanvasEditor/>
       </div>
 
       <div className="buttons">
@@ -25,7 +37,7 @@ export function CreateCardElement() {
         </button>
 
         <button className="btn solve" onClick={createNewCard}>
-          {value}
+          Create
         </button>
       </div>
     </div>

@@ -83,6 +83,7 @@
 
   .inputRow {
     display: flex;
+    align-items: center;
     gap: 6px;
     margin-bottom: 8px;
   }
@@ -93,6 +94,8 @@
     border-radius: 6px;
     border: none;
     outline: none;
+     overflow: hidden;        /* hide extra text */
+     text-overflow: ellipsis; /* show ... */
   }
 
   .submitBtn {
@@ -102,4 +105,24 @@
     padding: 6px 8px;
     border-radius: 6px;
     cursor: pointer;
+  }
+  .quiestion-popup{
+    background-color:  green;
+    border: 2px solid white;
+    color: white;
+   
+    border-radius: 10px;
+    min-width: 300px;
+    min-height: 200px;
+    max-width: 600px;
+    margin: auto;
+    margin-top: 100px;
+    position: fixed;
+     top: 20%;
+     left: 50%;
+     transform: translate(-50%, -50%);
+     z-index: 999;
+     padding: 20px;
+    text-align: center;
+    
   }

@@ -9,13 +9,13 @@ export function CardElement({
   
   createdAt = new Date().toLocaleString(),
 
-
-  onSolveSubmit,
+card
+  
 }) {
 
   const dispatch = useDispatch();
   const { cards } = useSelector((state) => state.card_state);
-  const card = cards[0]
+  // const card = cards[0]
 
 
   const [expanded, setExpanded] = useState(false);
@@ -57,11 +57,11 @@ export function CardElement({
 
       {/* INFO */}
       <div className="info">
-        <span className="date">📅 {createdAt}</span>
+        <span className="date">📅 {card.created}</span>
 
         <div className="stats">
-          <span className="right">✔ {7}</span>
-          <span className="wrong">✖ {4}</span>
+          <span className="right">✔ {card.right}</span>
+          <span className="wrong">✖ {card.wrong}</span>
         </div>
       </div>
 
@@ -88,6 +88,7 @@ export function CardElement({
         <div className="solveArea">
           {card.rects.map((rect, index) => (
             <div key={rect.id} className="inputRow">
+              <div>{rect.num}</div>
               <input
                 className="input"
                 placeholder={rect.field2}

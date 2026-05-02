@@ -11,21 +11,6 @@ export function InputsContainer() {
         dispatch(setUpdateField({id, field, value}))
       };
 
-      const handleSubmit = () => {
-    console.log(
-      JSON.stringify(
-        {
-          image,
-          ratio,
-          rects,
-        },
-        null,
-        2
-      )
-    );
-  };
-
-
     return (
         <div style={{ marginTop: 20 }}>
         {rects.map((r) => (

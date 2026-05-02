@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setImage, setRatio, setActiveId, setAddRect, setModifyRect, setFilterRect, setUpdateField} from "../../redux/slices/cardSlice";
  import { InputsContainer } from "./inputsContainer/InputsContainer";
@@ -8,7 +8,10 @@ export function ImageCanvasEditor() {
     const { image, ratio, activeId, rects } = useSelector((state) => state.card_state);
     
   const containerRef = useRef(null);
-
+  const [rectCount, setRectCount] = useState(1);
+  console.log(rects)
+     
+  
   
   const mode = useRef("idle");
   const start = useRef({ x: 0, y: 0 });
@@ -45,15 +48,15 @@ export function ImageCanvasEditor() {
 
   // ---------------- CREATE RECT ----------------
   const onPointerDownCanvas = (e) => {
+    
     if (e.target.dataset.type) return;
     if (!image) return;
 
     const { x, y } = getPercent(e);
 
     start.current = { x, y };
-
     const id = createId();
-
+    setRectCount(rectCount + 1)
     dispatch(setAddRect({
         id,
         x,
@@ -62,9 +65,11 @@ export function ImageCanvasEditor() {
         height: 0,
         field1: "",
         field2: "",
+        num: rectCount
+
       }))
       
-
+     
     dispatch(setActiveId(id));
     mode.current = "draw";
 

@@ -1,51 +1,57 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setQuestionPopup } from "../../redux/slices/cardSlice";
 
 export function SquaresLayout({ data }) {
-  const { image } = useSelector((state) => state.card_state);
+  const dispatch = useDispatch();
+
+  const showQuestion = (r) => {
+    dispatch(setQuestionPopup({set: 1, question: r}))
+  }
+
   const {  ratio, rects } = data;
   return (
+    
     <div
       style={{
         width: "100%",
         aspectRatio: ratio,
         position: "relative",
         overflow: "hidden",
-        backgroundImage: `url(${image})`,
+        backgroundImage: `url(${data.image})`,
         backgroundSize: "contain",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
       }}
     >
-      {rects.map((r) => (
+      {rects.map((r, i) => (
         <div
+          onClick={ () => showQuestion(r.field2)}
           key={r.id}
           style={{
+            cursor: "pointer",
             position: "absolute",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: "50%",
             left: `${r.x}%`,
             top: `${r.y}%`,
             width: `${r.width}%`,
             height: `${r.height}%`,
-            background: "rgba(255, 0, 0, 0.6)", // semi-transparent overlay
-            border: "1px solid rgba(255,255,255,0.6)",
+            background: "rgba(255, 0, 0, 1)",
+            border: "2px solid rgb(48, 45, 45)",
             borderRadius: 10,
             boxSizing: "border-box",
           }}
         >
           {/* optional labels */}
-          {(r.field1 || r.field2) && (
-            <div
-              style={{
-                color: "white",
-                fontSize: 10,
-                padding: 4,
-              }}
-            >
-              <div>{r.field1}</div>
-              <div>{r.field2}</div>
-            </div>
+          {(r.field2) && (
+           r.num
           )}
         </div>
       ))}
     </div>
+    
+    
   );
 }

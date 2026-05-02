@@ -8,7 +8,11 @@ const cardSlice = createSlice({
     image: null,
     ratio: 2,
     rects: [],
-    activeId: null
+    rectCount: 1,
+    activeId: null,
+    questionPopup: false,
+    questionPopupMessage: "",
+
   },
   reducers: {
     increment: (state) => {
@@ -67,6 +71,7 @@ const cardSlice = createSlice({
         }
 
         return r;
+        
       })
 
 
@@ -115,11 +120,21 @@ const cardSlice = createSlice({
         }
 
       })
+    },
+    setQuestionPopup: (state, action) => {
+      if(action.payload.set == 1){
+        state.questionPopup = true;
+        state.questionPopupMessage = action.payload.question;
+      }else{
+        state.questionPopup = false
+      }
+      
+
     }
   },
 });
 
 export const { increment, setImage, setRatio, setAddRect, setModifyRect,
-  setFilterRect, setUpdateField, setActiveId, setAnswer
+  setFilterRect, setUpdateField, setActiveId, setAnswer, setQuestionPopup
 } = cardSlice.actions;
 export default cardSlice.reducer;

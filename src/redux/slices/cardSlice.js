@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { postsArray } from "../../data/oneCard";
+import { act } from "react";
 
 const cardSlice = createSlice({
   name: "cardSlice",
@@ -12,6 +13,8 @@ const cardSlice = createSlice({
     activeId: null,
     questionPopup: false,
     questionPopupMessage: "",
+    rightAnswerPopup: false,
+    rightAnswer: ""
 
   },
   reducers: {
@@ -92,14 +95,14 @@ const cardSlice = createSlice({
       state.activeId = action.payload;
     },
     setAnswer: (state, action) => {
-      const answer = state.cards.map((elem) => {
+     state.cards.map((elem) => {
         if (elem.id == action.payload.cardId) {
           let deletedSomething = false;
 
           elem.rects = elem.rects.filter((r) => {
             const shouldDelete =
               r.id === action.payload.id &&
-              action.payload.value === r.field1;
+              action.payload.value.toLowerCase() === r.answer.toLowerCase();
 
             if (shouldDelete) {
               deletedSomething = true;
@@ -113,10 +116,9 @@ const cardSlice = createSlice({
             console.log("Something was deleted");
           } else {
             console.log("Nothing matched");
+            state.rightAnswerPopup = true;
+            elem.wrong += 1;
           }
-          // const a = elem.rects.filter((r) => r.id == action.payload.id && action.payload.value == r.field1)
-          // console.log(action.payload.id)
-          // console.log(JSON.parse(JSON.stringify(a)))
         }
 
       })
@@ -130,11 +132,62 @@ const cardSlice = createSlice({
       }
       
 
+    },
+    setDeleteCard: (state, action) => {
+      state.cards = state.cards.filter((el) => {
+        return el.id !== action.payload;
+      })
+     
+    },
+    setRight: (state, action) => {
+
+      state.cards.map((elem) => {
+        if(elem.id == action.payload)
+          elem.right = elem.right + 1
+      })
+    },
+    setRightAnswer: (state) => {
+       state.rightAnswerPopup = false;
+       
+  
+    },
+    answerMessage: (state, action) => {
+      const {cardId, id} = action.payload;
+     state.cards.forEach((elem) => {
+      if (elem.id == cardId){
+         elem.rects.forEach((el)=> {
+          if (el.id == id){
+              state.rightAnswer = el.answer;
+          }
+         })
+      }
+     })
+    },
+    deleteCard: (state, action) => {
+     state.cards = state.cards.filter((elem) => {
+      return elem.id != action.payload;
+     })
+    },
+    deleteLast: (state, action) => {
+      state.rects.pop()
+    },
+    setCount: (state, action) => {
+      state.rectCount = state.rectCount + action.payload;
+    },
+    updateElem: (state, action) => {
+      const a  = state.cards.filter((elem) => {
+      return elem.id == action.payload;
+     })
+      state.rects = a[0].rects;
+      state.image = a[0].image;
+      state.rectCount = a[0].rects.length + 1;
     }
+
   },
 });
 
 export const { increment, setImage, setRatio, setAddRect, setModifyRect,
-  setFilterRect, setUpdateField, setActiveId, setAnswer, setQuestionPopup
+  setFilterRect, setUpdateField, setActiveId, setAnswer, setQuestionPopup, 
+  setDeleteCard, setRight, setRightAnswer, answerMessage, deleteCard, deleteLast, setCount, updateElem
 } = cardSlice.actions;
 export default cardSlice.reducer;

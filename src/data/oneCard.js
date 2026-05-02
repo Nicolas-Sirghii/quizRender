@@ -1,41 +1,41 @@
 
 export const postsArray = [
   {
-  "id": 1,
-  "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7s8jgunlzu9RHZlpQDsmht3vHqCYFmWk4eg&s",
-  "ratio": 1.9768211920529801,
+  "id": "855000dc-1fe6-43df-938f-c140af81620b",
   "created": "today",
-  "right": 1,
+  "right": 0,
   "wrong": 0,
+  "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7s8jgunlzu9RHZlpQDsmht3vHqCYFmWk4eg&s",
+  "ratio": 2,
   "rects": [
     {
-      "id": "c6913479-e617-4156-be57-07e32ca3085f",
-      "x": 27.42857142857143,
-      "y": 13.386049877494463,
-      "width": 8.228567940848215,
-      "height": 20.107315264158025,
-      "field1": "rr",
-      "field2": "Some text, refers to placeholder or dummy content used in design, publishing, and software to showcase layouts before final content is ready. Commonly known as Lorem Ipsum, this filler text allows viewers to focus on visual formatting rather than",
+      "id": "a90d25b6-ef1e-4df0-85c2-0d3b9aebe279",
+      "x": 47.314278738839285,
+      "y": 51.25713729858399,
+      "width": 8.114292689732146,
+      "height": 14.62857927594866,
+      "answer": "tt",
+      "question": "2t",
       "num": 1
     },
     {
-      "id": "7615422b-2847-4277-b209-1db313e56ee1",
-      "x": 44.228567940848215,
-      "y": 28.07116682290299,
-      "width": 7.885716029575889,
-      "height": 17.39622364583959,
-      "field1": "aa",
-      "field2": "2a",
+      "id": "ac428965-f1dc-4f70-81e5-5df1e11f61c9",
+      "x": 59.65714808872768,
+      "y": 34.34286117553712,
+      "width": 8.457144601004465,
+      "height": 9.371429443359375,
+      "answer": "rr",
+      "question": "2r",
       "num": 2
     },
     {
-      "id": "8a59669e-a891-466a-b800-2d33c031dd47",
-      "x": 24.228567940848215,
-      "y": 68.51172147319663,
-      "width": 2.4000069754464306,
-      "height": 9.036996120622092,
-      "field1": "v",
-      "field2": "1v",
+      "id": "5bcf25c3-c991-4b1a-9739-ead31c53e5f1",
+      "x": 25.600001743861604,
+      "y": 59.94285855974469,
+      "width": 3.77142333984375,
+      "height": 8.91428920200893,
+      "answer": "ee",
+      "question": "2e",
       "num": 3
     }
   ]
@@ -54,8 +54,8 @@ export const postsArray = [
       "y": 15.419377209583365,
       "width": 10.628574916294653,
       "height": 23.044332620394684,
-      "field1": "ttt",
-      "field2": "3t",
+      "answer": "ttt",
+      "question": "3t",
       "num": 1
     },
     {
@@ -64,8 +64,8 @@ export const postsArray = [
       "y": 52.47105387080697,
       "width": 9.4857177734375,
       "height": 10.618466590405752,
-      "field1": "ff",
-      "field2": "2f",
+      "answer": "ff",
+      "question": "2f",
       "num": 2
     },
     {
@@ -74,8 +74,8 @@ export const postsArray = [
       "y": 71.67466833787965,
       "width": 6.74285888671875,
       "height": 18.97769303832952,
-      "field1": "g",
-      "field2": "1g",
+      "answer": "g",
+      "question": "1g",
       "num": 3
     }
   ]
@@ -94,8 +94,8 @@ export const postsArray = [
       "y": 30.33041342914755,
       "width": 6.400006975446427,
       "height": 17.62214291999525,
-      "field1": "w",
-      "field2": "1w",
+      "answer": "w",
+      "question": "1w",
       "num": 1
     },
     {
@@ -104,8 +104,8 @@ export const postsArray = [
       "y": 60.1525074141511,
       "width": 3.0857107979910623,
       "height": 11.296239494985372,
-      "field1": "ff",
-      "field2": "2f",
+      "answer": "ff",
+      "question": "2f",
       "num": 2
     }
   ]

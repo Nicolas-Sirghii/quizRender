@@ -3,14 +3,14 @@ import "./Display_card_styles.css"
 
 import { SquaresLayout } from "./Display_squares/Display_squares";
 import { useDispatch, useSelector } from "react-redux";
-import { setAnswer } from "../redux/slices/cardSlice";
+import { setAnswer, setDeleteCard, setRight, answerMessage, deleteCard, updateElem } from "../redux/slices/cardSlice";
 
 export function CardElement({
-  
+
   createdAt = new Date().toLocaleString(),
 
-card
-  
+  card
+
 }) {
 
   const dispatch = useDispatch();
@@ -28,23 +28,41 @@ card
   };
 
   const handleSubmit = (index, id, cardId) => {
+     
+    const data = cards.filter((el)=> {
+      return el.id == cardId
+    })
+    dispatch(answerMessage({cardId, id}))
+
+    if((data[0].rects.length == 1) && (data[0].rects[0].answer.toLowerCase() == answers[index].toLowerCase())){
+      dispatch(setRight(cardId))
+      setTimeout(() => {
+        dispatch(setDeleteCard(cardId))
+      }, 4000);
+      
+    }
     
-   dispatch(setAnswer({
+    
+
+    dispatch(setAnswer({
       id,
       value: answers[index],
       index,
       cardId
     }))
-   setAnswers(["", "", ""])
+    setAnswers(["", "", ""])
+    
+   
+
 
   };
 
 
-  const deletePost = () => {
-    console.log("delete post")
+  const deletePost = (id) => {
+    dispatch(deleteCard(id))
   }
-  const updatePost = () => {
-    console.log("update post")
+  const updatePost = (im, id) => {
+    dispatch(updateElem(id))
   }
 
 
@@ -52,7 +70,7 @@ card
     <div className="card">
       {/* IMAGE */}
       <div className="imageWrapper">
-        <SquaresLayout data={card}  />
+        <SquaresLayout data={card} />
       </div>
 
       {/* INFO */}
@@ -67,11 +85,11 @@ card
 
       {/* BUTTONS */}
       <div className="buttons">
-        <button className="btn delete" onClick={deletePost}>
+        <button className="btn delete" onClick={ () => deletePost(card.id)}>
           Delete
         </button>
 
-        <button className="btn update" onClick={updatePost}>
+        <button className="btn update" onClick={() => updatePost(card.image, card.id)}>
           Update
         </button>
 
@@ -91,7 +109,7 @@ card
               <div>{rect.num}</div>
               <input
                 className="input"
-                placeholder={rect.field2}
+                placeholder={rect.question}
                 value={answers[index] ?? ""}
                 onChange={(e) => handleChange(index, e.target.value)}
               />

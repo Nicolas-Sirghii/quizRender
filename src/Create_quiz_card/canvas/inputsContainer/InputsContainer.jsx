@@ -28,18 +28,18 @@ export function InputsContainer() {
             <input
               className="input"
               placeholder="Set the answer."
-              value={r.field1}
+              value={r.answer}
               onChange={(e) =>
-                updateField(r.id, "field1", e.target.value)
+                updateField(r.id, "answer", e.target.value)
               }
             />
 
             <input
               className="input"
               placeholder="Set the question."
-              value={r.field2}
+              value={r.question}
               onChange={(e) =>
-                updateField(r.id, "field2", e.target.value)
+                updateField(r.id, "question", e.target.value)
               }
             />
           </div>

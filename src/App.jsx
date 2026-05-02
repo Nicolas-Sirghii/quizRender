@@ -18,7 +18,8 @@ function App() {
   return (
     <div className='app-container'>
 
-      <CreateCardElement />
+     <CreateCardElement />
+     <Feed />
      
 
     </div>

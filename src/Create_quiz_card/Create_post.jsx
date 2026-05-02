@@ -1,13 +1,17 @@
 
-import {  useSelector } from "react-redux"
+import {  useSelector, useDispatch } from "react-redux"
 import { ImageCanvasEditor } from "./canvas/Canvas";
+import { deleteLast, setCount } from "../redux/slices/cardSlice";
 
 export function CreateCardElement() {
+  const dispatch = useDispatch();
   const { image, ratio, rects } = useSelector((state) => state.card_state);
   
 
   const deleteLastSquare = () => {
     console.log("dlelte last square")
+   dispatch(deleteLast())
+   dispatch(setCount(-1))
   }
   const createNewCard = () => {
     console.log(
@@ -34,16 +38,22 @@ export function CreateCardElement() {
       <div className="imageWrapper">
         <ImageCanvasEditor/>
       </div>
-
-      <div className="buttons">
-        <button className="btn delete" onClick={deleteLastSquare}>
+       {
+        image && 
+        <div className="buttons">
+          { (rects.length != 0) &&
+            <button className="btn delete" onClick={deleteLastSquare}>
           Delete
         </button>
+          }
+        
 
         <button className="btn solve" onClick={createNewCard}>
           Create
         </button>
       </div>
+       }
+      
     </div>
   );
 }

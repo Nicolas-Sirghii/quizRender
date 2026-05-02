@@ -25,7 +25,7 @@ export function SquaresLayout({ data }) {
     >
       {rects.map((r, i) => (
         <div
-          onClick={ () => showQuestion(r.field2)}
+          onClick={ () => showQuestion(r.question)}
           key={r.id}
           style={{
             cursor: "pointer",
@@ -45,8 +45,7 @@ export function SquaresLayout({ data }) {
           }}
         >
           {/* optional labels */}
-          {(r.field2) && (
-           r.num
+          {(r.num
           )}
         </div>
       ))}

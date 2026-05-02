@@ -1,14 +1,14 @@
 import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setImage, setRatio, setActiveId, setAddRect, setModifyRect, setFilterRect, setUpdateField} from "../../redux/slices/cardSlice";
+import { setImage, setRatio, setActiveId, setAddRect, setModifyRect, setFilterRect, setUpdateField, setCount} from "../../redux/slices/cardSlice";
  import { InputsContainer } from "./inputsContainer/InputsContainer";
 
 export function ImageCanvasEditor() {
   const dispatch = useDispatch();
-    const { image, ratio, activeId, rects } = useSelector((state) => state.card_state);
+    const { image, ratio, activeId, rects, rectCount } = useSelector((state) => state.card_state);
     
   const containerRef = useRef(null);
-  const [rectCount, setRectCount] = useState(1);
+  
   
      
   
@@ -50,21 +50,22 @@ export function ImageCanvasEditor() {
   const onPointerDownCanvas = (e) => {
     
     if (e.target.dataset.type) return;
-    if (!image) return;
+    // if (!image) return;
 
     const { x, y } = getPercent(e);
 
     start.current = { x, y };
     const id = createId();
-    setRectCount(rectCount + 1)
+
+    dispatch(setCount(1))
     dispatch(setAddRect({
         id,
         x,
         y,
         width: 0,
         height: 0,
-        field1: "",
-        field2: "",
+        answer: "",
+        question: "",
         num: rectCount
 
       }))
@@ -135,7 +136,7 @@ export function ImageCanvasEditor() {
     <div
       style={{ position: "relative" }}
     >
-      {!image && <input type="file"  onChange={handleImage} />}
+       <input type="file"  onChange={handleImage} />
       
 
 

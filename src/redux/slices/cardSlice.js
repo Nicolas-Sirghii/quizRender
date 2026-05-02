@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { postsArray } from "../../data/oneCard";
-import { act } from "react";
+
 
 const cardSlice = createSlice({
   name: "cardSlice",
@@ -182,8 +182,8 @@ const cardSlice = createSlice({
     deleteLast: (state) => {
       state.rects.pop()
     },
-    setCount: (state, action) => {
-      state.rectCount = state.rectCount + action.payload;
+    setCount: (state) => {
+      state.rectCount = state.rects.length + 1;
     },
     updateElem: (state, action) => {
       const a = state.cards.filter((elem) => {

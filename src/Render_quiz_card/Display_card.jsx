@@ -96,13 +96,16 @@ export function CardElement({
         <button className="btn update" onClick={() => updatePost(card.image, card.id)}>
           Update
         </button>
-
-        <button
+         {
+          card.rects.length != 0 &&
+          <button
           className="btn solve"
           onClick={() => setExpanded((p) => !p)}
         >
           {expanded ? "Close" : "Solve"}
         </button>
+         }
+        
       </div>
 
       {/* EXPANDED AREA */}

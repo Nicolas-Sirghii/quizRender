@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setImage, setRatio, setActiveId, setAddRect, setModifyRect, setFilterRect, setUpdateField, setCount} from "../../redux/slices/cardSlice";
  import { InputsContainer } from "./inputsContainer/InputsContainer";
+ 
 
 export function ImageCanvasEditor() {
   const dispatch = useDispatch();
@@ -50,14 +51,14 @@ export function ImageCanvasEditor() {
   const onPointerDownCanvas = (e) => {
     
     if (e.target.dataset.type) return;
-    // if (!image) return;
+    if (!image) return;
 
     const { x, y } = getPercent(e);
 
     start.current = { x, y };
     const id = createId();
 
-    dispatch(setCount(1))
+   
     dispatch(setAddRect({
         id,
         x,
@@ -83,6 +84,7 @@ export function ImageCanvasEditor() {
 
   // ---------------- MOVE ----------------
   const onPointerMove = (e) => {
+     dispatch(setCount(1))
     if (pointerId.current !== e.pointerId) return;
 
     const { x: mx, y: my } = getPercent(e);
@@ -98,6 +100,7 @@ export function ImageCanvasEditor() {
   };
 
   const startDrag = (e, r) => {
+    
     e.stopPropagation();
 
     dispatch(setActiveId(r.id));
@@ -155,7 +158,7 @@ export function ImageCanvasEditor() {
           overflow: "hidden",
           userSelect: "none",
           touchAction: "none",
-          backgroundImage: image ? `url(${image})` : "url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZLWKJBYIyWPCVVi2ZtdZ_TLu2Cfs4n5hg5Q&s)",
+          backgroundImage: image ? `url(${image})` : "url(../../../public/imagePlaceholder6.jpg)",
           backgroundSize: "contain",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",

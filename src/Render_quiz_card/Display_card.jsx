@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./Display_card_styles.css"
+import { useNavigate } from "react-router-dom";
 
 import { SquaresLayout } from "./Display_squares/Display_squares";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,7 +14,9 @@ export function CardElement({
 
 }) {
 
+
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { cards } = useSelector((state) => state.card_state);
   // const card = cards[0]
 
@@ -63,6 +66,7 @@ export function CardElement({
   }
   const updatePost = (im, id) => {
     dispatch(updateElem(id))
+    navigate("/createPost")
   }
 
 

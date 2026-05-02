@@ -14,10 +14,17 @@ const cardSlice = createSlice({
     questionPopup: false,
     questionPopupMessage: "",
     rightAnswerPopup: false,
-    rightAnswer: ""
+    rightAnswer: "",
+    updateCard: false,
+    updateCardId: null
 
   },
   reducers: {
+    clearCreate: (state) => {
+      state.image = null;
+      state.rects = [];
+      state.rectCount = 1;
+    },
     increment: (state) => {
       state.value += 1;
     },
@@ -74,7 +81,7 @@ const cardSlice = createSlice({
         }
 
         return r;
-        
+
       })
 
 
@@ -85,7 +92,7 @@ const cardSlice = createSlice({
 
     },
     setUpdateField: (state, action) => {
-     
+
       const { id, field, value } = action.payload;
       state.rects = state.rects.map((r) =>
         r.id === id ? { ...r, [field]: value } : r
@@ -95,14 +102,18 @@ const cardSlice = createSlice({
       state.activeId = action.payload;
     },
     setAnswer: (state, action) => {
-     state.cards.map((elem) => {
+       
+
+      state.cards.map((elem) => {
         if (elem.id == action.payload.cardId) {
           let deletedSomething = false;
 
           elem.rects = elem.rects.filter((r) => {
+            const userValue = action.payload.value || "a"
+            const emptyAnswer = r.answer || "a"
             const shouldDelete =
               r.id === action.payload.id &&
-              action.payload.value.toLowerCase() === r.answer.toLowerCase();
+              userValue.toLowerCase() === emptyAnswer.toLowerCase();
 
             if (shouldDelete) {
               deletedSomething = true;
@@ -124,70 +135,81 @@ const cardSlice = createSlice({
       })
     },
     setQuestionPopup: (state, action) => {
-      if(action.payload.set == 1){
+      if (action.payload.set == 1) {
         state.questionPopup = true;
         state.questionPopupMessage = action.payload.question;
-      }else{
+      } else {
         state.questionPopup = false
       }
-      
+
 
     },
     setDeleteCard: (state, action) => {
       state.cards = state.cards.filter((el) => {
         return el.id !== action.payload;
       })
-     
+
     },
     setRight: (state, action) => {
 
       state.cards.map((elem) => {
-        if(elem.id == action.payload)
+        if (elem.id == action.payload)
           elem.right = elem.right + 1
       })
     },
     setRightAnswer: (state) => {
-       state.rightAnswerPopup = false;
-       
-  
+      state.rightAnswerPopup = false;
+
+
     },
     answerMessage: (state, action) => {
-      const {cardId, id} = action.payload;
-     state.cards.forEach((elem) => {
-      if (elem.id == cardId){
-         elem.rects.forEach((el)=> {
-          if (el.id == id){
+      const { cardId, id } = action.payload;
+      state.cards.forEach((elem) => {
+        if (elem.id == cardId) {
+          elem.rects.forEach((el) => {
+            if (el.id == id) {
               state.rightAnswer = el.answer;
-          }
-         })
-      }
-     })
+            }
+          })
+        }
+      })
     },
     deleteCard: (state, action) => {
-     state.cards = state.cards.filter((elem) => {
-      return elem.id != action.payload;
-     })
+      state.cards = state.cards.filter((elem) => {
+        return elem.id != action.payload;
+      })
     },
-    deleteLast: (state, action) => {
+    deleteLast: (state) => {
       state.rects.pop()
     },
     setCount: (state, action) => {
       state.rectCount = state.rectCount + action.payload;
     },
     updateElem: (state, action) => {
-      const a  = state.cards.filter((elem) => {
-      return elem.id == action.payload;
-     })
+      const a = state.cards.filter((elem) => {
+        return elem.id == action.payload;
+      })
       state.rects = a[0].rects;
       state.image = a[0].image;
       state.rectCount = a[0].rects.length + 1;
+      state.updateCard = true;
+      state.updateCardId = action.payload
+    },
+    createCard: (state, action) => {
+      state.cards = [action.payload, ...state.cards];
+    },
+    updateExist: (state, action) => {
+      state.cards = state.cards.map(elem =>
+        elem.id === state.updateCardId ? action.payload : elem
+      );
+      state.updateCard = false;
     }
-
   },
 });
 
 export const { increment, setImage, setRatio, setAddRect, setModifyRect,
-  setFilterRect, setUpdateField, setActiveId, setAnswer, setQuestionPopup, 
-  setDeleteCard, setRight, setRightAnswer, answerMessage, deleteCard, deleteLast, setCount, updateElem
+  setFilterRect, setUpdateField, setActiveId, setAnswer, setQuestionPopup,
+  setDeleteCard, setRight, setRightAnswer, answerMessage, deleteCard, deleteLast, setCount, updateElem,
+  createCard, updateExist, clearCreate
 } = cardSlice.actions;
 export default cardSlice.reducer;

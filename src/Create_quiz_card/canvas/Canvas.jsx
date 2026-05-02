@@ -210,7 +210,7 @@ export function ImageCanvasEditor() {
       </div>
 
       {/* INPUTS */}
-      <InputsContainer />
+      <InputsContainer/>
     </div>
   );
 }

@@ -33,6 +33,7 @@ export function InputsContainer() {
                 updateField(r.id, "answer", e.target.value)
               }
             />
+            <div>{r.num}</div>
 
             <input
               className="input"

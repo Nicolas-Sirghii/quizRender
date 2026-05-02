@@ -1,11 +1,13 @@
 
 import {  useSelector, useDispatch } from "react-redux"
+import { useNavigate } from "react-router-dom";
 import { ImageCanvasEditor } from "./canvas/Canvas";
-import { deleteLast, setCount } from "../redux/slices/cardSlice";
+import { deleteLast, setCount, createCard, updateExist } from "../redux/slices/cardSlice";
 
 export function CreateCardElement() {
   const dispatch = useDispatch();
-  const { image, ratio, rects } = useSelector((state) => state.card_state);
+  const navigate = useNavigate();
+  const { image, ratio, rects, updateCard } = useSelector((state) => state.card_state);
   
 
   const deleteLastSquare = () => {
@@ -29,7 +31,32 @@ export function CreateCardElement() {
         2
       )
     );
+    dispatch(createCard({
+          id: crypto.randomUUID(),
+          created: "today",
+          right: 0,
+          wrong: 0,
+          image,
+          ratio,
+          rects,
+        }))
+
+
+        navigate("/feed")
   }
+  function updateExistingCard() {
+       dispatch(updateExist({
+          id: crypto.randomUUID(),
+          created: "today",
+          right: 0,
+          wrong: 0,
+          image,
+          ratio,
+          rects,
+        }))
+        navigate("/feed")
+  }
+
 
 
   return (
@@ -46,11 +73,21 @@ export function CreateCardElement() {
           Delete
         </button>
           }
-        
+        {
+          updateCard ?
+          <button className="btn update" onClick={updateExistingCard}>
+          Update
+        </button>
+        :
 
-        <button className="btn solve" onClick={createNewCard}>
+          <button className="btn solve" onClick={createNewCard}>
           Create
         </button>
+        
+        
+        }
+
+        
       </div>
        }
       

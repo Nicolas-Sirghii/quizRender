@@ -42,7 +42,7 @@ export function CreateCardElement() {
         }))
 
 
-        navigate("/feed")
+        navigate("/")
   }
   function updateExistingCard() {
        dispatch(updateExist({
@@ -54,7 +54,7 @@ export function CreateCardElement() {
           ratio,
           rects,
         }))
-        navigate("/feed")
+        navigate("/")
   }
 
 

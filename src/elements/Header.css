@@ -11,7 +11,8 @@
     left: 0;
     right: 0;
     z-index: 999;
-}
+    overflow: hidden;
+} 
 .header a {
     text-decoration: none;
     color: white;
@@ -21,4 +22,57 @@
     width: 40px;
     height: 40px;
     background-color: rgb(189, 85, 85);
+}
+.logo{
+    padding-top: 10px;
+    font-size: 20px;
+    color: white;
+    object-fit: cover;
+  transform: scale(1.4);
+  height: 100px;
+} 
+
+
+
+
+
+.header a {
+  text-decoration: none;
+}
+
+.header button {
+  background: #222;
+  color: white;
+  border: 1px solid #333;
+  padding: 8px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: 0.2s ease;
+}
+
+.header button:hover {
+  background: #333;
+  border-color: #555;
+}
+
+.header button:active {
+  transform: scale(0.98);
+}
+
+.userAvatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #2b7cff;
+  border: 2px solid #444;
+  box-shadow: 0 0 10px rgba(43, 124, 255, 0.3);
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.userAvatar:hover {
+  transform: scale(1.05);
+  background: #3d8dff;
 }

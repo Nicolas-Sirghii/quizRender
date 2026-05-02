@@ -4,10 +4,12 @@ import { useDispatch } from "react-redux";
 import "./Header.css"
 
 
+
 export function Header() {
     const dispatch = useDispatch();
     return (
         <div className="header">
+            <img className="logo" src="../../public/logo.png" alt="" />
             <Link to="/">
             <button>Feed</button>
             </Link>

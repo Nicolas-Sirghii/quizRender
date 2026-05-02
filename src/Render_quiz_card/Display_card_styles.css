@@ -93,6 +93,7 @@
     padding: 6px;
     border-radius: 6px;
     border: none;
+    width: 60%;
     outline: none;
      overflow: hidden;        /* hide extra text */
      text-overflow: ellipsis; /* show ... */

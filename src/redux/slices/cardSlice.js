@@ -82,9 +82,9 @@ const cardSlice = createSlice({
 
     },
     setUpdateField: (state, action) => {
-      const prev = state.rects;
+     
       const { id, field, value } = action.payload;
-      state.rects = prev.map((r) =>
+      state.rects = state.rects.map((r) =>
         r.id === id ? { ...r, [field]: value } : r
       )
     },

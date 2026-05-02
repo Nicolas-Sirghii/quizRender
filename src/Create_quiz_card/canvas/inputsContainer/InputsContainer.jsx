@@ -27,7 +27,7 @@ export function InputsContainer() {
           >
             <input
               className="input"
-              placeholder="Field 1"
+              placeholder="Set the answer."
               value={r.field1}
               onChange={(e) =>
                 updateField(r.id, "field1", e.target.value)
@@ -36,7 +36,7 @@ export function InputsContainer() {
 
             <input
               className="input"
-              placeholder="Field 2"
+              placeholder="Set the question."
               value={r.field2}
               onChange={(e) =>
                 updateField(r.id, "field2", e.target.value)

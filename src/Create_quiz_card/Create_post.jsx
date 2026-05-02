@@ -13,6 +13,10 @@ export function CreateCardElement() {
     console.log(
       JSON.stringify(
         {
+          id: crypto.randomUUID(),
+          created: "today",
+          right: 0,
+          wrong: 0,
           image,
           ratio,
           rects,

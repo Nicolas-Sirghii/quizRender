@@ -9,7 +9,7 @@ export function ImageCanvasEditor() {
     
   const containerRef = useRef(null);
   const [rectCount, setRectCount] = useState(1);
-  console.log(rects)
+  
      
   
   
@@ -182,26 +182,30 @@ export function ImageCanvasEditor() {
               boxSizing: "border-box",
               outline:
                 r.id === activeId
-                  ? "2px solid white"
+                  ? "2px solid black"
                   : "none",
               touchAction: "none",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center"
             }}
-          >
+          >{r.num}
             <div
               data-type="resize"
               onPointerDown={(e) => startResize(e, r)}
               style={{
                 width: 16,
                 height: 16,
-                background: "white",
+                background: "black",
                 position: "absolute",
                 right: 2,
                 bottom: 2,
-                borderRadius: 4,
+                borderRadius: 8,
               }}
             />
           </div>
         ))}
+        
       </div>
 
       {/* INPUTS */}

@@ -345,8 +345,8 @@ const is_verified = true
         style={{
           marginTop: "10px",
           background: "transparent",
-          border: "1px solid red",
-          color: "red"
+          border: "1px solid gray",
+          color: "gray"
         }}
       >
         DELETE PROFILE

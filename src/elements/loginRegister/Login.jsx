@@ -1,18 +1,17 @@
-
-
-
 import "./Login.css";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-// import { useDispatch } from "react-redux";
-// import { setTimeLeft, setAutorization } from "../redux/slices/loginSlice";
-// import { setUserData } from "../redux/slices/userSlice";
+import { useDispatch } from "react-redux";
+import { setTimeLeft } from "../../redux/slices/loginSlice";
+import { setUserData } from "../../redux/slices/userSlice";
+import { setAutorization } from "../../redux/slices/loginSlice";
 
 
 export function Login() {
-
-  const { api } = useSelector((state) => state.auth_state);
+  const dispatch = useDispatch();
+  const { path } = useSelector((state) => state.path);
+  const host = localStorage.getItem("api") || path;
   const navigate = useNavigate();
  
   const [form, setForm] = useState({
@@ -37,7 +36,7 @@ export function Login() {
     setLoading(true);
 
     try {
-      const response = await fetch(`${api}/login`, {
+      const response = await fetch(`${host}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -50,12 +49,12 @@ export function Login() {
       if (!data.token || data.token === "Invalid Credentials") {
         throw new Error("Invalid email or password");
       }
-    //    dispatch(setUserData(data.user))
+       dispatch(setUserData(data.user))
        // backend gives: expire_minutes
       const expiresAt = Date.now() + data.expire_minutes * 60 * 1000;
       localStorage.setItem("expires_at", expiresAt);
-    //   dispatch(setTimeLeft())
-    //   dispatch(setAutorization(true))
+      dispatch(setTimeLeft())
+      dispatch(setAutorization(true))
       localStorage.setItem("jwt", data.token);
       localStorage.setItem("neonverseUser", JSON.stringify(data.user))
       navigate("/");
@@ -109,11 +108,11 @@ export function Login() {
         </button>
 
         <p className="link">
-          <Link to="/forgot-password">Forgot Password?</Link>
+          <a href="/forgot-password">Forgot Password?</a>
         </p>
 
         <p className="link">
-          Don't have an account? <Link to="/register">Register</Link>
+          Don't have an account? <a href="/register">Register</a>
         </p>
       </form>
 

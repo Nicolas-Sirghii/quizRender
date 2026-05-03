@@ -5,7 +5,20 @@ import { setDropDownMenu } from "../../redux/slices/cardSlice"
 
 export function DropDown() {
     const { dropDownMenu } = useSelector((state) => state.card_state);
-    const { api } = useSelector((state) => state.auth_state);
+
+    const logout = () => {
+    localStorage.removeItem("jwt");
+    localStorage.removeItem("api")
+    localStorage.removeItem("neonverseUser")
+    localStorage.removeItem("expires_at")
+
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 1000);
+
+
+  };
+    
 
     const dispatch = useDispatch();
     return (
@@ -32,7 +45,7 @@ export function DropDown() {
                 </svg>
 
             </Link>
-            <Link>
+            <Link onClick={logout}>
                 Logout
                 <svg viewBox="0 0 24 24" fill="currentColor" className="dropdown-icon">
                     <path d="M16 13v-2H7V8l-5 4 5 4v-3h9zm3-9H8c-1.1 0-2 .9-2 2v4h2V6h11v12H8v-4H6v4c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z" />

@@ -3,18 +3,21 @@ import { clearCreate } from "../redux/slices/cardSlice";
 import { useDispatch, useSelector} from "react-redux";
 import { DropDown } from "./dropDownMenu/DropDownMenu";
 import { setDropDownMenu } from "../redux/slices/cardSlice";
-import { setApi } from "../redux/slices/authSlice";
+// import { setApi } from "../redux/slices/authSlice";
+import { changePath } from "../redux/slices/pathSlice";
 import "./Header.css"
 
 
 
 export function Header() {
     const dispatch = useDispatch();
-    const { api } = useSelector((state) => state.auth_state);
+    const { path } = useSelector((state) => state.path);
+
+    
     
     return (
         <>
-        <div className="apiLink" onClick={() => dispatch(setApi())}>{api}</div>
+        <div className="apiLink" onClick={() => dispatch(changePath())}>{path}</div>
         <div className="header">
             <Link to="/">
             <img className="logo" src="/logo.png" alt="" />

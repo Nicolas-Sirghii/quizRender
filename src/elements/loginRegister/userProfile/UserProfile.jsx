@@ -1,4 +1,6 @@
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useSelector, useDispatch} from "react-redux";
+import { setUserData } from "../../../redux/slices/userSlice";
 import "./UserProfile.css";
 
 
@@ -6,8 +8,10 @@ export function Profile() {
 
 
   const fileInputRef = useRef(null);
+  const dispatch = useDispatch()
 
-  const host = localStorage.getItem("api") || "path";
+  const { path } = useSelector((state) => state.path);
+  const host = localStorage.getItem("api") || path;
 
 
   const [popup, setPopup] = useState(false);
@@ -18,17 +22,16 @@ export function Profile() {
   const [avatarFile, setAvatarFile] = useState(null);
 
   // 🔥 Redux user data
-//   const {
-//     username,
-//     email,
-//     is_verified,
-//     avatar_url,
-//     age,
-//     phone,
-//     gender,
-//     bio
-//   } = useSelector((state) => state.userSlice);
-const is_verified = true
+  const {
+    username,
+    email,
+    is_verified,
+    avatar_url,
+    age,
+    phone,
+    gender,
+    bio
+  } = useSelector((state) => state.userSlice);
   const isVer_ified = is_verified ? "VERIFIED" : "NOT VERIFIED"
   const [verifyMessage, setVerifiMessage] = useState(isVer_ified)
 
@@ -45,18 +48,18 @@ const is_verified = true
   });
 
   // 🔄 Sync Redux → local
-//   useEffect(() => {
-//     setFormData({
-//       username: username || "",
-//       email: email || "",
-//       age: age || "",
-//       phone: phone || "",
-//       gender: gender || "",
-//       bio: bio || "",
-//       avatarPreview: avatar_url || "",
-//       is_verified: is_verified || false
-//     });
-//   }, [username, email, age, phone, gender, bio, avatar_url, is_verified]);
+  useEffect(() => {
+    setFormData({
+      username: username || "",
+      email: email || "",
+      age: age || "",
+      phone: phone || "",
+      gender: gender || "",
+      bio: bio || "",
+      avatarPreview: avatar_url || "",
+      is_verified: is_verified || false
+    });
+  }, [username, email, age, phone, gender, bio, avatar_url, is_verified]);
 
   // ✏️ input handler
   const handleChange = (e) => {
@@ -123,7 +126,7 @@ const is_verified = true
       });
 
       const data = await res.json();
-    //    dispatch(setUserData(data.user_data))
+       dispatch(setUserData(data.user_data))
 
       if (!res.ok) throw new Error(data.detail || "Error updating profile");
 
@@ -226,7 +229,7 @@ const is_verified = true
         <img
           src={
             formData.avatarPreview ||
-            "/userAvatar3.png"
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRH-UUug53VoMV0rggFl2tsYJ5oywZ43hjn-Q&s"
           }
           className="avatar"
           onClick={handleAvatarClick}
@@ -341,11 +344,11 @@ const is_verified = true
         style={{
           marginTop: "10px",
           background: "transparent",
-          border: "1px solid gray",
-          color: "gray"
+          border: "1px solid red",
+          color: "red"
         }}
       >
-        DELETE PROFILE
+        DELETE ACCOUNT
       </button>
     </div>
   );

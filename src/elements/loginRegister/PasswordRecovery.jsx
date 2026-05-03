@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export function RecoverPassword() {
+  const { api } = useSelector((state) => state.auth_state);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
@@ -41,7 +43,7 @@ export function RecoverPassword() {
     formData.append("password", password);
 
     try {
-      const res = await fetch("http://localhost:8000/recover-password", {
+      const res = await fetch(`${api}/recover-password`, {
         method: "POST",
         body: formData,
       });

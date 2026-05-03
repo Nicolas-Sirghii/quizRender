@@ -4,16 +4,15 @@
 import "./Login.css";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 // import { useDispatch } from "react-redux";
 // import { setTimeLeft, setAutorization } from "../redux/slices/loginSlice";
 // import { setUserData } from "../redux/slices/userSlice";
 
 
 export function Login() {
-//   const dispatch = useDispatch();
-//   const { path } = useSelector((state) => state.path);
-  const host = localStorage.getItem("api") || "path";
+
+  const { api } = useSelector((state) => state.auth_state);
   const navigate = useNavigate();
  
   const [form, setForm] = useState({
@@ -38,7 +37,7 @@ export function Login() {
     setLoading(true);
 
     try {
-      const response = await fetch(`${host}/login`, {
+      const response = await fetch(`${api}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

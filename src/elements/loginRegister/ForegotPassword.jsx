@@ -1,9 +1,10 @@
 import { useState } from "react";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 export function ForgotPassword() {
 //   const { path } = useSelector((state) => state.path);
-  const host = localStorage.getItem("api") || "path";
+const { api } = useSelector((state) => state.auth_state);
+  
 
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -13,7 +14,7 @@ export function ForgotPassword() {
     const formData = new FormData();
     formData.append("email", email);
 
-    const res = await fetch(`${host}/forgot-password`, {
+    const res = await fetch(`${api}/forgot-password`, {
       method: "POST",
       body: formData,
     });

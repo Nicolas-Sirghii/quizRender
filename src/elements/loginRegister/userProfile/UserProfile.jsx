@@ -1,6 +1,4 @@
 import { useState, useRef } from "react";
-// import { useSelector, useDispatch} from "react-redux";
-// import { setUserData } from "../../redux/slices/userSlice";
 import "./UserProfile.css";
 
 
@@ -8,9 +6,7 @@ export function Profile() {
 
 
   const fileInputRef = useRef(null);
-//   const dispatch = useDispatch()
 
-//   const { path } = useSelector((state) => state.path);
   const host = localStorage.getItem("api") || "path";
 
 

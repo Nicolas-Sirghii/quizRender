@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import "./Login.css";
 
 export function Register() {
-//   const { path } = useSelector((state) => state.path);
-  const host = localStorage.getItem("api") || "path"
+const { api } = useSelector((state) => state.auth_state);
+ 
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
@@ -38,7 +38,7 @@ export function Register() {
     }
 
     try {
-      const response = await fetch(`${host}/register`, {
+      const response = await fetch(`${api}/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

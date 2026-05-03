@@ -52,7 +52,7 @@ export function ImageCanvasEditor() {
   const onPointerDownCanvas = (e) => {
     
     if (e.target.dataset.type) return;
-    if ((!image) || (image == "../../../public/imagePlaceholder6.jpg")) return;
+    if ((!image) || (image == "/imagePlaceholder6.jpg")) return;
 
     const { x, y } = getPercent(e);
 
@@ -159,7 +159,7 @@ export function ImageCanvasEditor() {
           overflow: "hidden",
           userSelect: "none",
           touchAction: "none",
-          backgroundImage: image ? `url(${image})` : "url(../../../public/imagePlaceholder6.jpg)",
+          backgroundImage: image ? `url(${image})` : "url(/imagePlaceholder6.jpg)",
           backgroundSize: "contain",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",

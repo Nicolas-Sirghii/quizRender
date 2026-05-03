@@ -17,8 +17,8 @@
 }
 @media (max-width: 480px) {
   .auth-card {
-    width: 90vw;
-    padding: 10px;
+    width: 70vw;
+    padding: 40px;
   }
 }
 .auth-card h2 {
@@ -62,12 +62,12 @@
 }
 
 .link a {
-  color: #ff00d0;
+  color: #ff7700;
   text-decoration: none;
 }
 
 .link a:hover {
-  text-shadow: 0 0 8px #ff00ff;
+  text-shadow: 0 0 8px #9a719a;
 }
 
 
@@ -185,10 +185,10 @@
   max-width: 400px;
   margin: 50px auto;
   padding: 30px;
-  background: #0f0f1a;
+  background: #0f1a0f;
   border: 2px solid #00ffea;
   border-radius: 15px;
-  box-shadow: 0 0 20px #00ffea;
+  
   color: #00ffea;
   font-family: 'Orbitron', sans-serif;
 }
@@ -197,7 +197,7 @@
   text-align: center;
   font-size: 1.8rem;
   margin-bottom: 20px;
-  text-shadow: 0 0 10px #00ffea;
+ 
 }
 
 .cyber-form {

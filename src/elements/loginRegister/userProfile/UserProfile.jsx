@@ -230,7 +230,7 @@ const is_verified = true
         <img
           src={
             formData.avatarPreview ||
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRH-UUug53VoMV0rggFl2tsYJ5oywZ43hjn-Q&s"
+            "/userAvatar3.png"
           }
           className="avatar"
           onClick={handleAvatarClick}

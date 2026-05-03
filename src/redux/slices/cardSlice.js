@@ -25,7 +25,7 @@ const cardSlice = createSlice({
   },
   reducers: {
     clearCreate: (state) => {
-      state.image = "../../../public/imagePlaceholder6.jpg";
+      state.image = "/imagePlaceholder6.jpg";
       state.rects = [];
       state.rectCount = 1;
       

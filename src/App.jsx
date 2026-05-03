@@ -17,9 +17,6 @@ function App() {
       <Route path="/" element={<Feed />} />
       <Route path="/createPost" element={<CreateCardElement />} />
      </Routes>
-     
-     
-
     </div>
   )
 }

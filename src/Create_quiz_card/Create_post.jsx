@@ -66,7 +66,7 @@ export function CreateCardElement() {
         <ImageCanvasEditor/>
       </div>
        {
-        image && 
+        (image != "../../../public/imagePlaceholder6.jpg") && 
         <div className="buttons">
           { (rects.length != 0) &&
             <button className="btn delete" onClick={deleteLastSquare}>

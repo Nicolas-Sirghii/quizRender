@@ -26,6 +26,7 @@ const cardSlice = createSlice({
       state.image = "../../../public/imagePlaceholder6.jpg";
       state.rects = [];
       state.rectCount = 1;
+      
     },
     increment: (state) => {
       state.value += 1;
@@ -196,7 +197,9 @@ const cardSlice = createSlice({
       state.rectCount = a[0].rects.length + 1;
       state.updateCard = true;
       state.updateCardId = action.payload
+      state.ratio = a[0].ratio;
     },
+
     createCard: (state, action) => {
       state.cards = [action.payload, ...state.cards];
     },

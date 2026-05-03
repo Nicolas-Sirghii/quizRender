@@ -15,7 +15,8 @@ export function Header() {
             <Link to="/createPost" onClick={() => dispatch(clearCreate())}>
             <button className="addPost">+</button>
             </Link>
-            <div className="userAvatar"></div>
+            <Link className="avatarWraper"><img className="Avatar" src="../../public/userAvatar3.png"></img></Link>
+            
         </div>
     )
 }

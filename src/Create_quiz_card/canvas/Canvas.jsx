@@ -6,7 +6,8 @@ import { setImage, setRatio, setActiveId, setAddRect, setModifyRect, setFilterRe
 
 export function ImageCanvasEditor() {
   const dispatch = useDispatch();
-    const { image, ratio, activeId, rects, rectCount } = useSelector((state) => state.card_state);
+    const { image, ratio, activeId, rects, rectCount, updateCard } = useSelector((state) => state.card_state);
+   
     
   const containerRef = useRef(null);
   
@@ -67,7 +68,7 @@ export function ImageCanvasEditor() {
         height: 0,
         answer: "",
         question: "",
-        num: rectCount
+        num: rectCount,
 
       }))
       
@@ -139,7 +140,7 @@ export function ImageCanvasEditor() {
     <div
       style={{ position: "relative" }}
     >
-       <input type="file"  onChange={handleImage} />
+     {!updateCard && <input type="file"  onChange={handleImage} />}  
       
 
 

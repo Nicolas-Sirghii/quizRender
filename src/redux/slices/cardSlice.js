@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { postsArray } from "../../data/oneCard";
 
-
 const cardSlice = createSlice({
   name: "cardSlice",
   initialState: {
+    api: "/api",
     cards: postsArray,
     image: null,
     ratio: 2,
@@ -14,6 +14,8 @@ const cardSlice = createSlice({
     questionPopup: false,
     questionPopupMessage: "",
     rightAnswerPopup: false,
+    deletePopup: false,
+    deleteId: null,
     rightAnswer: "",
     updateCard: false,
     updateCardId: null
@@ -21,7 +23,7 @@ const cardSlice = createSlice({
   },
   reducers: {
     clearCreate: (state) => {
-      state.image = null;
+      state.image = "../../../public/imagePlaceholder6.jpg";
       state.rects = [];
       state.rectCount = 1;
     },
@@ -203,6 +205,26 @@ const cardSlice = createSlice({
         elem.id === state.updateCardId ? action.payload : elem
       );
       state.updateCard = false;
+    },
+    setDeletePopup: (state, action) => {
+      const {status, id} = action.payload;
+      if(status == "open"){
+        state.deletePopup = true;
+        state.deleteId = id;
+      }
+      if(status == "close"){
+        state.deletePopup = false;
+        state.deleteId = id;
+      }
+      if(status == "delete"){
+        state.deletePopup = false;
+         state.cards = state.cards.filter((elem) => {
+        return elem.id != state.deleteId;
+      })
+      state.deleteId = id;
+      }
+
+      
     }
   },
 });
@@ -210,6 +232,6 @@ const cardSlice = createSlice({
 export const { increment, setImage, setRatio, setAddRect, setModifyRect,
   setFilterRect, setUpdateField, setActiveId, setAnswer, setQuestionPopup,
   setDeleteCard, setRight, setRightAnswer, answerMessage, deleteCard, deleteLast, setCount, updateElem,
-  createCard, updateExist, clearCreate
+  createCard, updateExist, clearCreate, setDeletePopup
 } = cardSlice.actions;
 export default cardSlice.reducer;

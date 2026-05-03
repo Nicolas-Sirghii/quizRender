@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { SquaresLayout } from "./Display_squares/Display_squares";
 import { useDispatch, useSelector } from "react-redux";
-import { setAnswer, setDeleteCard, setRight, answerMessage, deleteCard, updateElem } from "../redux/slices/cardSlice";
+import { setAnswer, setDeleteCard, setRight, answerMessage, deleteCard, updateElem, setDeletePopup } from "../redux/slices/cardSlice";
 
 export function CardElement({
 
@@ -23,6 +23,7 @@ export function CardElement({
 
   const [expanded, setExpanded] = useState(false);
   const [answers, setAnswers] = useState(["", "", ""]);
+  const [color, setColor] = useState("#111")
 
   const handleChange = (id, value) => {
     const copy = [...answers];
@@ -39,6 +40,7 @@ export function CardElement({
 
     if((data[0].rects.length == 1) && (data[0].rects[0].answer.toLowerCase() == answers[index].toLowerCase())){
       dispatch(setRight(cardId))
+      setColor("grey")
       setTimeout(() => {
         dispatch(setDeleteCard(cardId))
       }, 4000);
@@ -62,7 +64,8 @@ export function CardElement({
 
 
   const deletePost = (id) => {
-    dispatch(deleteCard(id))
+    // dispatch(deleteCard(id))
+    dispatch(setDeletePopup({status: "open", id: id}))
   }
   const updatePost = (im, id) => {
     dispatch(updateElem(id))
@@ -71,7 +74,7 @@ export function CardElement({
 
 
   return (
-    <div className="card">
+    <div className="card" style={{background: `${color}`}}>
       {/* IMAGE */}
       <div className="imageWrapper">
         <SquaresLayout data={card} />

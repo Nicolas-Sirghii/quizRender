@@ -51,7 +51,7 @@ export function ImageCanvasEditor() {
   const onPointerDownCanvas = (e) => {
     
     if (e.target.dataset.type) return;
-    if (!image) return;
+    if ((!image) || (image == "../../../public/imagePlaceholder6.jpg")) return;
 
     const { x, y } = getPercent(e);
 

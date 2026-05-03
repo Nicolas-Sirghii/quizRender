@@ -51,6 +51,9 @@
   font-weight: bold;
   transition: 0.2s ease;
 }
+.addPost{
+  
+}
 
 .header button:hover {
   background: #333;

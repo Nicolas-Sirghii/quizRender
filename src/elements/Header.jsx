@@ -9,12 +9,11 @@ export function Header() {
     const dispatch = useDispatch();
     return (
         <div className="header">
-            <img className="logo" src="../../public/logo.png" alt="" />
             <Link to="/">
-            <button>Feed</button>
+            <img className="logo" src="../../public/logo.png" alt="" />
             </Link>
             <Link to="/createPost" onClick={() => dispatch(clearCreate())}>
-            <button>Create</button>
+            <button className="addPost">+</button>
             </Link>
             <div className="userAvatar"></div>
         </div>

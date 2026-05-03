@@ -1,0 +1,39 @@
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    justify-content: space-between;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  border: 1px solid green;
+  border-radius: 10px;
+  background-color: #111;
+  height: 150px;
+  width: 150px;
+  opacity: 0;
+  transform: translateX(20px);
+  pointer-events: none;
+  padding: 20px;
+  transition: all 0.25s ease;
+}
+.menu a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* OPEN STATE */
+.menu.open {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+.dropdown-icon {
+  width: 18px;
+  height: 18px;
+  fill: green;
+  transition: 0.2s;
+}

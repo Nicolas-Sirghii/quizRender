@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { postsArray } from "../../data/oneCard";
+import { act } from "react";
 
 const cardSlice = createSlice({
   name: "cardSlice",
@@ -18,7 +19,8 @@ const cardSlice = createSlice({
     deleteId: null,
     rightAnswer: "",
     updateCard: false,
-    updateCardId: null
+    updateCardId: null,
+    dropDownMenu: false
 
   },
   reducers: {
@@ -228,6 +230,9 @@ const cardSlice = createSlice({
       }
 
       
+    },
+    setDropDownMenu: (state) => {
+      state.dropDownMenu = !state.dropDownMenu;
     }
   },
 });
@@ -235,6 +240,6 @@ const cardSlice = createSlice({
 export const { increment, setImage, setRatio, setAddRect, setModifyRect,
   setFilterRect, setUpdateField, setActiveId, setAnswer, setQuestionPopup,
   setDeleteCard, setRight, setRightAnswer, answerMessage, deleteCard, deleteLast, setCount, updateElem,
-  createCard, updateExist, clearCreate, setDeletePopup
+  createCard, updateExist, clearCreate, setDeletePopup, setDropDownMenu
 } = cardSlice.actions;
 export default cardSlice.reducer;

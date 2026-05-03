@@ -140,7 +140,7 @@ export function ImageCanvasEditor() {
     <div
       style={{ position: "relative" }}
     >
-     {!updateCard && <input type="file"  onChange={handleImage} />}  
+     {!updateCard && <input type="file" className="fileInput"  onChange={handleImage} />}  
       
 
 

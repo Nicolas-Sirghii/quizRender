@@ -1,0 +1,18 @@
+www.easyretain.com {
+    redir https://easyretain.com{uri} permanent
+}
+
+easyretain.com {
+    root * /usr/share/caddy/dist
+
+    route {
+        handle_path /api/* {
+            reverse_proxy backend:8000
+        }
+
+        handle {
+            try_files {path} {path}/ /index.html
+            file_server
+        }
+    }
+}

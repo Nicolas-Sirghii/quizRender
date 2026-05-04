@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  db:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: easyretainData
+      MYSQL_DATABASE: easyretain
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./init-db:/docker-entrypoint-initdb.d
+    restart: always
+
+  backend:
+    build: ./easyretain_backend
+    depends_on:
+      - db
+    restart: always
+
+  frontend:
+    image: caddy:2
+    depends_on:
+      - backend
+    volumes:
+      - ./easyretain_frontend:/usr/share/caddy
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: always
+
+
+volumes:
+  db_data:
+  caddy_data:
+  caddy_config:

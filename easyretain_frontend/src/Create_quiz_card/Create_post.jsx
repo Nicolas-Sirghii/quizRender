@@ -16,21 +16,34 @@ export function CreateCardElement() {
    dispatch(setCount(-1))
   }
   const createNewCard = () => {
-    console.log(
-      JSON.stringify(
-        {
-          id: crypto.randomUUID(),
-          created: "today",
-          right: 0,
-          wrong: 0,
-          image,
-          ratio,
-          rects,
-        },
-        null,
-        2
-      )
-    );
+  const sendCard = async () => {
+  if (!image || image === "/imagePlaceholder6.jpg") return;
+
+  const formData = new FormData();
+
+  // blob URL → File
+  const response = await fetch(image);
+  const blob = await response.blob();
+  const file = new File([blob], "card.png", { type: blob.type });
+
+  formData.append("image", file);
+  formData.append("ratio", ratio);
+  formData.append("rects", JSON.stringify(rects));
+
+  const token = localStorage.getItem("jwt");
+
+  const res = await fetch("http://localhost:8000/cards/create", {
+    method: "POST",
+    body: formData,
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  const data = await res.json();
+  console.log("CARD CREATED:", data);
+};
+sendCard()
     dispatch(createCard({
           id: crypto.randomUUID(),
           created: "today",

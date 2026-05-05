@@ -7,13 +7,13 @@
 
 // const { cards, questionPopup, questionPopupMessage, rightAnswerPopup, rightAnswer, deletePopup } = useSelector((state) => state.card_state);
 // const dispatch = useDispatch();
-  
+
 // if ( rightAnswerPopup ) {
 //     setTimeout(() => {
 //         dispatch(setRightAnswer())
 //     }, 2000);
 // }
-   
+
 
 //     return (
 //         <div className="feed-container">
@@ -34,14 +34,42 @@
 
 
 
+
+
+
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCards, appendCards } from "../redux/slices/cardSlice";
+import { appendCards, setLoadingApi } from "../redux/slices/cardSlice";
 import { CardElement } from "../Render_quiz_card/Display_card";
+import { setQuestionPopup, setRightAnswer, setDeletePopup } from "../redux/slices/cardSlice";
+import "./Feed.css"
 
 export function Feed() {
   const dispatch = useDispatch();
   const cards = useSelector((state) => state.card_state.cards);
+  const { path } = useSelector((state) => state.path);
+  useEffect(() => {
+    if (cards.length == 0) {
+      localStorage.setItem("changes_made", "1")
+    }
+  })
+
+
+  const { questionPopup, questionPopupMessage, rightAnswerPopup, rightAnswer, deletePopup } = useSelector((state) => state.card_state);
+
+  if (rightAnswerPopup) {
+    setTimeout(() => {
+      dispatch(setRightAnswer())
+    }, 2000);
+  }
+
+
+
+
+
+
+
+
 
   const [offset, setOffset] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -54,9 +82,10 @@ export function Feed() {
     if (!token) return;
 
     setLoading(true);
+    dispatch(setLoadingApi(true))
 
     const res = await fetch(
-      `http://localhost:8000/cards/feed?offset=${newOffset}&limit=${LIMIT}`,
+      `${path}}/cards/feed?offset=${newOffset}&limit=${LIMIT}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -70,18 +99,14 @@ export function Feed() {
       setHasMore(false);
     }
 
-    if (newOffset === 0) {
-      dispatch(setCards(data));
-    } else {
-      dispatch(appendCards(data));
-    }
+    dispatch(appendCards(data));
+
 
     setLoading(false);
+    dispatch(setLoadingApi(false))
   };
 
-  useEffect(() => {
-    fetchCards(0);
-  }, []);
+
 
   const loadMore = () => {
     const newOffset = offset + LIMIT;
@@ -91,7 +116,22 @@ export function Feed() {
 
   return (
     <div className="feed-container">
-      {cards.map((card) => (
+
+
+
+      {questionPopup && <div className="quiestion-popup" onClick={() => dispatch(setQuestionPopup({ set: 0 }))}>{questionPopupMessage}</div>}
+      {rightAnswerPopup && <div className="right-answer-popup">{rightAnswer}</div>}
+      {
+        deletePopup && <div className="delete-popup">
+          <button className="btn delete" onClick={() => dispatch(setDeletePopup({ status: "delete", id: null }))}>Delete</button>
+          <button className="btn solve" onClick={() => dispatch(setDeletePopup({ status: "close", id: null }))}>Cancel</button>
+        </div>
+      }
+
+
+
+
+      {cards.length > 0 && cards.map((card) => (
         <CardElement key={card.id} card={card} />
       ))}
 

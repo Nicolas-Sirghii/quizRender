@@ -2,12 +2,13 @@
 import {  useSelector, useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom";
 import { ImageCanvasEditor } from "./canvas/Canvas";
-import { deleteLast, setCount, createCard, updateExist } from "../redux/slices/cardSlice";
+import { deleteLast, setCount, createCard, updateExist, setLoadingApi } from "../redux/slices/cardSlice";
 
 export function CreateCardElement() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { image, ratio, rects, updateCard } = useSelector((state) => state.card_state);
+  const { path } = useSelector((state) => state.path);
   
 
   const deleteLastSquare = () => {
@@ -31,8 +32,8 @@ export function CreateCardElement() {
   formData.append("rects", JSON.stringify(rects));
 
   const token = localStorage.getItem("jwt");
-
-  const res = await fetch("http://localhost:8000/cards/create", {
+  dispatch(setLoadingApi(true))
+  const res = await fetch(`${path}/cards/create`, {
     method: "POST",
     body: formData,
     headers: {
@@ -42,6 +43,8 @@ export function CreateCardElement() {
 
   const data = await res.json();
   console.log("CARD CREATED:", data);
+  localStorage.setItem("changes_made", "1")
+  dispatch(setLoadingApi(false))
 };
 sendCard()
     dispatch(createCard({
@@ -73,8 +76,8 @@ sendCard()
 
 
   return (
+    <div style={{ marginTop: "40px"}}>
     <div className="card">
-
       <div className="imageWrapper">
         <ImageCanvasEditor/>
       </div>
@@ -104,6 +107,7 @@ sendCard()
       </div>
        }
       
+    </div>
     </div>
   );
 }

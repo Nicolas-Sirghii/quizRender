@@ -116,7 +116,7 @@ export function CardElement({
         <div className="solveArea">
           {card.rects.map((rect, index) => (
             <div key={rect.id} className="inputRow">
-              <div>{rect.num}</div>
+              <div className="rect-num">{rect.num}</div>
               <input
                 className="input"
                 placeholder={rect.question}

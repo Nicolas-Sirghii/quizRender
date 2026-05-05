@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 const initialState = {
-  path: "/api",
+  path: localStorage.getItem("api") || "/api",
   pathFlag: false,
   avatar: "w",
   userData: {},

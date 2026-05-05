@@ -35,7 +35,7 @@ def create_salt() -> str:
 
 
 def create_token(payload: dict) -> str:
-    payload["exp"] = int((datetime.now(timezone.utc) + timedelta(minutes=expire_session_minutes)).timestamp())
+    payload["exp"] = int((datetime.now(timezone.utc) + timedelta(hours=24)).timestamp())
     return jwt.encode(payload, SECRET_KEY, algorithm=JWT_ALGORITHM)
 
 

@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { postsArray } from "../../data/oneCard";
 
 const cardSlice = createSlice({
   name: "cardSlice",
   initialState: {
     api: "/api",
-    cards: postsArray,
+    cards: JSON.parse(localStorage.getItem("userCards")) || [],
+    loadingApi: false,
     image: null,
     ratio: 2,
     rects: [],
@@ -23,6 +23,9 @@ const cardSlice = createSlice({
 
   },
   reducers: {
+    setLoadingApi: (state, action) => {
+      state.loadingApi = action.payload;
+    },
     clearCreate: (state) => {
       state.image = "/imagePlaceholder6.jpg";
       state.rects = [];
@@ -139,19 +142,15 @@ const cardSlice = createSlice({
       })
     },
     setQuestionPopup: (state, action) => {
-      if (action.payload.set == 1) {
-        state.questionPopup = true;
-        state.questionPopupMessage = action.payload.question;
-      } else {
-        state.questionPopup = false
-      }
-
+      state.questionPopup = !state.questionPopup;
+      state.questionPopupMessage = action.payload.question;
 
     },
     setDeleteCard: (state, action) => {
       state.cards = state.cards.filter((el) => {
         return el.id !== action.payload;
       })
+      localStorage.setItem("userCards", JSON.stringify(state.cards));
 
     },
     setRight: (state, action) => {
@@ -182,6 +181,7 @@ const cardSlice = createSlice({
       state.cards = state.cards.filter((elem) => {
         return elem.id != action.payload;
       })
+      
     },
     deleteLast: (state) => {
       state.rects.pop()
@@ -209,6 +209,7 @@ const cardSlice = createSlice({
         elem.id === state.updateCardId ? action.payload : elem
       );
       state.updateCard = false;
+      localStorage.setItem("userCards", JSON.stringify(state.cards));
     },
     setDeletePopup: (state, action) => {
       const {status, id} = action.payload;
@@ -227,8 +228,7 @@ const cardSlice = createSlice({
       })
       state.deleteId = id;
       }
-
-      
+      localStorage.setItem("userCards", JSON.stringify(state.cards));
     },
     setDropDownMenu: (state) => {
       state.dropDownMenu = !state.dropDownMenu;
@@ -251,6 +251,6 @@ export const { increment, setImage, setRatio, setAddRect, setModifyRect,
   setFilterRect, setUpdateField, setActiveId, setAnswer, setQuestionPopup,
   setDeleteCard, setRight, setRightAnswer, answerMessage, deleteCard, deleteLast, setCount, updateElem,
   createCard, updateExist, clearCreate, setDeletePopup, setDropDownMenu, appendCards, setCards,
-  clearCards
+  clearCards, setLoadingApi
 } = cardSlice.actions;
 export default cardSlice.reducer;

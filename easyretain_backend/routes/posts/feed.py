@@ -38,7 +38,7 @@ async def get_feed(
         SELECT *
         FROM cards
         WHERE user_id = %s
-        ORDER BY ( wrong_count - right_count) DESC
+        ORDER BY (right_count - wrong_count)
         LIMIT %s OFFSET %s
     """, (user_id, limit, offset))
 

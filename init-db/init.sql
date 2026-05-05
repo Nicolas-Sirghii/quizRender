@@ -15,3 +15,27 @@ CREATE TABLE users (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ON UPDATE CURRENT_TIMESTAMP
 );
+
+CREATE TABLE cards (
+    id VARCHAR(36) PRIMARY KEY,
+    user_id INT NOT NULL,
+    image_url VARCHAR(500) NOT NULL,
+    ratio FLOAT NOT NULL,
+    right_count INT DEFAULT 0,
+    wrong_count INT DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE card_rects (
+    id VARCHAR(36) PRIMARY KEY,
+    card_id VARCHAR(36) NOT NULL,
+    question TEXT NOT NULL,
+    answer TEXT NOT NULL,
+    x FLOAT NOT NULL,
+    y FLOAT NOT NULL,
+    width FLOAT NOT NULL,
+    height FLOAT NOT NULL,
+    num INT NOT NULL,
+    FOREIGN KEY (card_id) REFERENCES cards(id) ON DELETE CASCADE
+);

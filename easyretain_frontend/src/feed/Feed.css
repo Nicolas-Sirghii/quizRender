@@ -22,3 +22,8 @@
     padding: 40px;
     
 }
+.load-more{
+    width: 400px;
+    height: 40px;
+    background: green;
+}

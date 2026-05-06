@@ -85,7 +85,7 @@ export function Feed() {
     dispatch(setLoadingApi(true))
 
     const res = await fetch(
-      `${path}}/cards/feed?offset=${newOffset}&limit=${LIMIT}`,
+      `${path}/cards/feed?offset=${newOffset}&limit=${LIMIT}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -136,7 +136,7 @@ export function Feed() {
       ))}
 
       {hasMore && (
-        <button onClick={loadMore} disabled={loading}>
+        <button className="load-more" onClick={loadMore} disabled={loading}>
           {loading ? "Loading..." : "Load more"}
         </button>
       )}

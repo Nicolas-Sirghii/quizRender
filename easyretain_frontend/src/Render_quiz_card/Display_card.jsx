@@ -82,7 +82,7 @@ export function CardElement({
 
       {/* INFO */}
       <div className="info">
-        <span className="date">📅 {card.created}</span>
+        <span className="date">📅 {card.created.split("T")[0]}</span>
 
         <div className="stats">
           <span className="right">✔ {card.right}</span>

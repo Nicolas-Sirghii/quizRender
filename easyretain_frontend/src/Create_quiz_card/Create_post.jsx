@@ -2,7 +2,7 @@
 import {  useSelector, useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom";
 import { ImageCanvasEditor } from "./canvas/Canvas";
-import { deleteLast, setCount, createCard, updateExist, setLoadingApi } from "../redux/slices/cardSlice";
+import { deleteLast, setCount, createCard, updateExist, setLoadingApi, clearCreate } from "../redux/slices/cardSlice";
 
 export function CreateCardElement() {
   const dispatch = useDispatch();
@@ -17,6 +17,7 @@ export function CreateCardElement() {
    dispatch(setCount(-1))
   }
   const createNewCard = () => {
+    dispatch(clearCreate())
   const sendCard = async () => {
   if (!image || image === "/imagePlaceholder6.jpg") return;
 

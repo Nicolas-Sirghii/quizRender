@@ -4,7 +4,7 @@ const cardSlice = createSlice({
   name: "cardSlice",
   initialState: {
     api: "/api",
-    cards: JSON.parse(localStorage.getItem("userCards")) || [],
+    cards: JSON.parse(localStorage.getItem("userCards")) || [], 
     loadingApi: false,
     image: null,
     ratio: 2,

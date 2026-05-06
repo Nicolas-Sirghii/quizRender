@@ -23,7 +23,9 @@
     
 }
 .load-more{
-    width: 400px;
+    width: 80%;
+    max-width: 400px;
     height: 40px;
     background: green;
+    margin-bottom: 30px;
 }

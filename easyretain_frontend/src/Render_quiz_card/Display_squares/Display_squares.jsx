@@ -39,8 +39,8 @@ export function SquaresLayout({ data }) {
             width: `${r.width}%`,
             height: `${r.height}%`,
             background: "rgba(255, 0, 0, 1)",
-            border: "2px solid rgb(48, 45, 45)",
-            borderRadius: 10,
+            border: "1px solid rgb(48, 45, 45)",
+            borderRadius: 3,
             boxSizing: "border-box",
           }}
         >

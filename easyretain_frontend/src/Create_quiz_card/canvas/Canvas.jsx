@@ -13,7 +13,7 @@ export function ImageCanvasEditor() {
   
   
      
-  
+  const [cover , setCover] = useState(false)
   
   const mode = useRef("idle");
   const start = useRef({ x: 0, y: 0 });
@@ -133,13 +133,18 @@ export function ImageCanvasEditor() {
       e.currentTarget.setPointerCapture(e.pointerId);
     } catch {}
   };
-
+  const overlayMode = () => {
+    setCover(!cover)
+  }
  
 
   return (
     <div
-      style={{ position: "relative" }}
+      style={{ position: "relative"}}
+      onDoubleClick={overlayMode}
     >
+      {cover && <div style={{width: "100%", height: "100%", position: "absolute", zIndex: "999", backgroundColor: "grey", opacity: "0.5" }}></div>}
+      
      {!updateCard && <input type="file" className="fileInput"  onChange={handleImage} />}  
       
 
@@ -163,6 +168,7 @@ export function ImageCanvasEditor() {
           backgroundSize: "contain",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
+          borderRadius: "6px"
         }}
       >
         {rects.map((r) => (
@@ -180,7 +186,7 @@ export function ImageCanvasEditor() {
                 r.id === activeId
                   ? "rgba(255,0,0,0.5)"
                   : "rgba(255,0,0,1)",
-              borderRadius: 12,
+              borderRadius: 3,
               color: "white",
               fontSize: 10,
               padding: 4,
@@ -199,12 +205,12 @@ export function ImageCanvasEditor() {
               data-type="resize"
               onPointerDown={(e) => startResize(e, r)}
               style={{
-                width: 16,
-                height: 16,
+                width: 10,
+                height: 10,
                 background: "black",
                 position: "absolute",
-                right: 2,
-                bottom: 2,
+                right: 0,
+                bottom: 0,
                 borderRadius: 8,
               }}
             />

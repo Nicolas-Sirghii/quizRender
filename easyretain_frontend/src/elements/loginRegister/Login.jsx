@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { setTimeLeft } from "../../redux/slices/loginSlice";
 import { setUserData } from "../../redux/slices/userSlice";
 import { setAutorization } from "../../redux/slices/loginSlice";
+import { Link } from "react-router-dom";
 
 
 export function Login() {
@@ -108,11 +109,11 @@ export function Login() {
         </button>
 
         <p className="link">
-          <a href="/forgot-password">Forgot Password?</a>
+          <Link to="/forgot-password">Forgot Password?</Link>
         </p>
 
         <p className="link">
-          Don't have an account? <a href="/register">Register</a>
+          Don't have an account? <Link to="/register">Register</Link>
         </p>
       </form>
 

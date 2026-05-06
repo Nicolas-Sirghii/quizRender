@@ -327,8 +327,8 @@ export function Profile() {
       </div>
 
       {/* SAVE BUTTON */}
-      <button onClick={handleSaveProfile}>
-        {loading ? "Saving..." : "SAVE PROFILE"}
+      <button className="create-profile" onClick={handleSaveProfile}>
+        {loading ? "Saving..." : "CREATE PROFILE"}
       </button>
 
       {/* POPUP */}
@@ -341,14 +341,9 @@ export function Profile() {
       )}
        <button
         onClick={handleDeleteAccount}
-        style={{
-          marginTop: "10px",
-          background: "transparent",
-          border: "1px solid red",
-          color: "red"
-        }}
+        className="delete-profile"
       >
-        DELETE ACCOUNT
+        DELETE PROFILE
       </button>
     </div>
   );

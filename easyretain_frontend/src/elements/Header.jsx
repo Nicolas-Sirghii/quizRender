@@ -1,11 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { clearCreate } from "../redux/slices/cardSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { DropDown } from "./dropDownMenu/DropDownMenu";
 import { setDropDownMenu } from "../redux/slices/cardSlice";
 import { changePath } from "../redux/slices/pathSlice";
 import { useEffect } from "react";
-import { setCards } from "../redux/slices/cardSlice";
+import { setCards, setRatio } from "../redux/slices/cardSlice";
 import "./Header.css"
 
 
@@ -14,10 +14,8 @@ export function Header() {
   const dispatch = useDispatch();
   const { path } = useSelector((state) => state.path);
   const { loadingApi } = useSelector((state) => state.card_state);
+  const navigate = useNavigate();
  
-
-
-
 
   const LIMIT = 10;
 
@@ -25,8 +23,8 @@ export function Header() {
     const token = localStorage.getItem("jwt");
 
     if (localStorage.getItem("changes_made") == "0") return
-
-    if (!token) return;
+    if (!token) navigate("/login") ;
+    if (!token)  return;
 
     const res = await fetch(
       `${path}/cards/feed?offset=${0}&limit=${LIMIT}`,
@@ -38,12 +36,12 @@ export function Header() {
     );
 
     const data = await res.json();
-    
-
     if (Array.isArray(data)) {
       localStorage.setItem("userCards", JSON.stringify(data));
       dispatch(setCards(data));
-    }
+    }else(
+      navigate("/login")
+    )
 
     localStorage.setItem("changes_made", "0")
   };
@@ -65,7 +63,7 @@ export function Header() {
           <img className="logo" src="/logo.png" alt="" />
         </Link>
         <Link to="/createPost" onClick={() => dispatch(clearCreate())}>
-          <button className="addPost" style={{ color: loadingApi ? "red" : "green" }}>+</button>
+          <button className="addPost" style={{ color: loadingApi ? "red" : "green" }} onClick={() => dispatch(setRatio(2))}>+</button>
         </Link>
 
         <Link onClick={() => dispatch(setDropDownMenu())} className="avatarWraper"><img className="Avatar" src="/userAvatar3.png"></img></Link>

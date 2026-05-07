@@ -23,7 +23,7 @@ export function SquaresLayout({ data }) {
         backgroundPosition: "center",
       }}
     >
-      {rects.map((r, i) => (
+      {rects.map((r) => (
         <div
           onClick={ () => showQuestion(r.question, r.id)}
           key={r.id}

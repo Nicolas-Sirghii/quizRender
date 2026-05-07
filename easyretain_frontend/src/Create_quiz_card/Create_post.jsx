@@ -74,8 +74,6 @@ sendCard()
         navigate("/")
   }
 
-
-
   return (
     <div style={{ marginTop: "40px"}}>
     <div className="card">
@@ -83,7 +81,7 @@ sendCard()
         <ImageCanvasEditor/>
       </div>
        {
-        (image != "../../../public/imagePlaceholder6.jpg") && 
+        (image && image != "/imagePlaceholder6.jpg") && 
         <div className="buttons">
           { (rects.length != 0) &&
             <button className="btn delete" onClick={deleteLastSquare}>
@@ -100,7 +98,6 @@ sendCard()
           <button className="btn solve" onClick={createNewCard}>
           Create
         </button>
-        
         
         }
 

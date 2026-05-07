@@ -21,9 +21,31 @@ const cardSlice = createSlice({
     updateCardId: null,
     dropDownMenu: false,
     rId: ""
-
   },
   reducers: {
+    update1: (state) => {
+      state.updateCard = false;
+      state.dropDownMenu = false;
+    },
+    clearEverything: (state) => {
+    state.loadingApi = false;
+    state.image =  null;
+    state.ratio = 2;
+    state.rects = [];
+    state.rectCount = 1;
+    state.activeId = null;
+    state.questionPopup = false;
+    state.questionPopupMessage = "";
+    state.rightAnswerPopup = false;
+    state.deletePopup = false;
+    state.deleteId = null;
+    state.rightAnswer = "";
+    state.updateCard = false;
+    state.updateCardId = null;
+    state.dropDownMenu = false;
+    state.rId = "";
+
+    },
     setLoadingApi: (state, action) => {
       state.loadingApi = action.payload;
     },
@@ -132,7 +154,8 @@ const cardSlice = createSlice({
 
           // 👉 run ONCE
           if (deletedSomething) {
-            console.log("Something was deleted");
+            state.questionPopup = false;
+            state.questionPopupMessage = "";
           } else {
             console.log("Nothing matched");
             state.rightAnswerPopup = true;
@@ -145,8 +168,10 @@ const cardSlice = createSlice({
     setQuestionPopup: (state, action) => {
       
      
-        state.questionPopup = !state.questionPopup;
+        
      
+         state.questionPopup = !state.questionPopup;
+       
          
       
       state.questionPopupMessage = action.payload.question;
@@ -166,6 +191,9 @@ const cardSlice = createSlice({
         if (elem.id == action.payload)
           elem.right = elem.right + 1
       })
+      console.log("right")
+    state.questionPopup = false;
+    state.questionPopupMessage = "";
     },
     setRightAnswer: (state) => {
       state.rightAnswerPopup = false;
@@ -216,6 +244,7 @@ const cardSlice = createSlice({
         elem.id === state.updateCardId ? action.payload : elem
       );
       state.updateCard = false;
+      state.image = null;
       localStorage.setItem("userCards", JSON.stringify(state.cards));
     },
     setDeletePopup: (state, action) => {
@@ -258,6 +287,6 @@ export const { increment, setImage, setRatio, setAddRect, setModifyRect,
   setFilterRect, setUpdateField, setActiveId, setAnswer, setQuestionPopup,
   setDeleteCard, setRight, setRightAnswer, answerMessage, deleteCard, deleteLast, setCount, updateElem,
   createCard, updateExist, clearCreate, setDeletePopup, setDropDownMenu, appendCards, setCards,
-  clearCards, setLoadingApi
+  clearCards, setLoadingApi,clearEverything, update1
 } = cardSlice.actions;
 export default cardSlice.reducer;

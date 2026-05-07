@@ -7,13 +7,20 @@ const initialState = {
   pathFlag: false,
   avatar: "w",
   userData: {},
-  autorized: false
+  autorized: false,
+  is_loged_in: JSON.parse(localStorage.getItem("is_user_loged_in"))  || false
 };
 
 const urlSlice = createSlice({
   name: "host",
   initialState,
   reducers: {
+    setLOGuser: (state, action) => {
+            
+            state.is_loged_in = action.payload;
+            localStorage.setItem("is_user_loged_in",JSON.stringify(action.payload))
+            
+        },
     changePath: (state) => {
       state.pathFlag = !state.pathFlag
       if (state.pathFlag) {
@@ -42,5 +49,5 @@ const urlSlice = createSlice({
   },
 });
 
-export const { changePath, getAvatar, setUserData, changeUserData, cahngeAutorized} = urlSlice.actions;
+export const { changePath, getAvatar, setUserData, changeUserData, cahngeAutorized, setLOGuser} = urlSlice.actions;
 export default urlSlice.reducer;

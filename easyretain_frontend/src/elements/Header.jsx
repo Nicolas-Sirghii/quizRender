@@ -5,7 +5,8 @@ import { DropDown } from "./dropDownMenu/DropDownMenu";
 import { setDropDownMenu } from "../redux/slices/cardSlice";
 import { changePath } from "../redux/slices/pathSlice";
 import { useEffect } from "react";
-import { setCards, setRatio } from "../redux/slices/cardSlice";
+import { setCards, setRatio, clearEverything, update1 } from "../redux/slices/cardSlice";
+import { setLOGuser } from "../redux/slices/pathSlice";
 import "./Header.css"
 
 
@@ -15,16 +16,14 @@ export function Header() {
   const { path } = useSelector((state) => state.path);
   const { loadingApi } = useSelector((state) => state.card_state);
   const navigate = useNavigate();
-  const { email, avatar_url, } = useSelector((state) => state.userSlice);
+  const { email, avatar_url } = useSelector((state) => state.userSlice);
 
 
   const LIMIT = 10;
 
   const fetchCards = async () => {
     const token = localStorage.getItem("jwt");
-
     if (localStorage.getItem("changes_made") == "0") return
-    if (!token) navigate("/login");
     
     if (!token) return;
 
@@ -36,16 +35,18 @@ export function Header() {
         },
       }
     );
-
+    
     const data = await res.json();
     if (Array.isArray(data)) {
       localStorage.setItem("userCards", JSON.stringify(data));
       dispatch(setCards(data));
+      dispatch(setLOGuser(true))
     } else {
+    
+      dispatch(setLOGuser(false))
       localStorage.removeItem("api")
       localStorage.removeItem("neonverseUser")
       localStorage.removeItem("userCards")
-      navigate("/login")
     }
       
       
@@ -62,16 +63,19 @@ export function Header() {
   }, [email])
 
 
-
+   const clearUpdate = () => {
+    dispatch(setRatio(2))
+    dispatch(update1())
+   }
   return (
     <>
       <div className="apiLink" onClick={() => dispatch(changePath())}>{path}</div>
       <div className="header">
-        <Link to="/">
+        <Link to="/" onClick={ () => dispatch(clearEverything())}>
           <img className="logo" src="/logo.png" alt="" />
         </Link>
         <Link to="/createPost" onClick={() => dispatch(clearCreate())}>
-          <button className="addPost" style={{ color: loadingApi ? "red" : "green" }} onClick={() => dispatch(setRatio(2))}>+</button>
+          <button className="addPost" style={{ color: loadingApi ? "red" : "green" }} onClick={clearUpdate}>+</button>
         </Link>
 
         <Link onClick={() => dispatch(setDropDownMenu())} className="avatarWraper"><img className="Avatar" src={avatar_url || "userAvatar3.png"}></img></Link>

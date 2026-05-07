@@ -9,7 +9,8 @@ const initialState = JSON.parse(localStorage.getItem("neonverseUser")) || {
     age: null,
     phone: null,
     gender: null,
-    bio: null
+    bio: null,
+    
     
 };
 
@@ -39,6 +40,7 @@ const userSlice = createSlice({
             local.is_verified = 1;
             localStorage.setItem("neonverseUser", JSON.stringify(local));
         },
+        
        
     },
 });

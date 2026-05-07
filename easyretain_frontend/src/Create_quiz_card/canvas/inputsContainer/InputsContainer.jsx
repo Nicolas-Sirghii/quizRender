@@ -26,7 +26,7 @@ export function InputsContainer() {
             }}
           >
             <input
-              className="input"
+              className="input-create"
               placeholder="Set the answer."
               value={r.answer}
               onChange={(e) =>
@@ -36,7 +36,7 @@ export function InputsContainer() {
             <div>{r.num}</div>
 
             <input
-              className="input"
+              className="input-create"
               placeholder="Set the question."
               value={r.question}
               onChange={(e) =>

@@ -19,7 +19,8 @@ const cardSlice = createSlice({
     rightAnswer: "",
     updateCard: false,
     updateCardId: null,
-    dropDownMenu: false
+    dropDownMenu: false,
+    rId: ""
 
   },
   reducers: {
@@ -142,8 +143,14 @@ const cardSlice = createSlice({
       })
     },
     setQuestionPopup: (state, action) => {
-      state.questionPopup = !state.questionPopup;
+      
+     
+        state.questionPopup = !state.questionPopup;
+     
+         
+      
       state.questionPopupMessage = action.payload.question;
+      state.rId = action.payload.id;
 
     },
     setDeleteCard: (state, action) => {

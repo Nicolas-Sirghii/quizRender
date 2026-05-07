@@ -50,15 +50,15 @@
   /* BUTTONS */
   .buttons {
     display: flex;
-    justify-content: space-between;
-    gap: 40px;
+    justify-content: space-around;
+    gap: 20px;
   }
 
   .btn {
-    flex: 1;
+    width: 46%;
     border: none;
     padding: 2px 4px;
-    border-radius: 2px;
+    border-radius: 4px;
     cursor: pointer;
     color: white;
   }
@@ -92,8 +92,17 @@
   .input {
    width: 50%;
     padding: 6px;
-    /* flex: 0.5; */
+    flex: 1;
     border-radius: 6px;
+    outline: none;
+     overflow: hidden;        /* hide extra text */
+     text-overflow: ellipsis; /* show ... */
+  }
+  .input-create {
+    width: 50%;
+    padding: 6px;
+    border-radius: 6px;
+    border: 1px solid red;
     outline: none;
      overflow: hidden;        /* hide extra text */
      text-overflow: ellipsis; /* show ... */

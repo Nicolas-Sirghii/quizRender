@@ -4,8 +4,8 @@ import { setQuestionPopup } from "../../redux/slices/cardSlice";
 export function SquaresLayout({ data }) {
   const dispatch = useDispatch();
 
-  const showQuestion = (r) => {
-    dispatch(setQuestionPopup({set: 1, question: r}))
+  const showQuestion = (r, id) => {
+    dispatch(setQuestionPopup({set: 1, question: r, id}))
   }
 
   const {  ratio, rects } = data;
@@ -25,7 +25,7 @@ export function SquaresLayout({ data }) {
     >
       {rects.map((r, i) => (
         <div
-          onClick={ () => showQuestion(r.question)}
+          onClick={ () => showQuestion(r.question, r.id)}
           key={r.id}
           style={{
             cursor: "pointer",

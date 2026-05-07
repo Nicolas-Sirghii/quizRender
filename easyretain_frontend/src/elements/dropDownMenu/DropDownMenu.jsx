@@ -11,6 +11,8 @@ export function DropDown() {
     localStorage.removeItem("api")
     localStorage.removeItem("neonverseUser")
     localStorage.removeItem("expires_at")
+    localStorage.removeItem("userCards")
+    localStorage.removeItem("changes_made")
 
     setTimeout(() => {
       window.location.href = "/";

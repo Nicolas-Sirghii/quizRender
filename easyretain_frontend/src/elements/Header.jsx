@@ -15,7 +15,8 @@ export function Header() {
   const { path } = useSelector((state) => state.path);
   const { loadingApi } = useSelector((state) => state.card_state);
   const navigate = useNavigate();
- 
+  const { email, avatar_url, } = useSelector((state) => state.userSlice);
+
 
   const LIMIT = 10;
 
@@ -23,8 +24,9 @@ export function Header() {
     const token = localStorage.getItem("jwt");
 
     if (localStorage.getItem("changes_made") == "0") return
-    if (!token) navigate("/login") ;
-    if (!token)  return;
+    if (!token) navigate("/login");
+    
+    if (!token) return;
 
     const res = await fetch(
       `${path}/cards/feed?offset=${0}&limit=${LIMIT}`,
@@ -39,9 +41,15 @@ export function Header() {
     if (Array.isArray(data)) {
       localStorage.setItem("userCards", JSON.stringify(data));
       dispatch(setCards(data));
-    }else(
+    } else {
+      localStorage.removeItem("api")
+      localStorage.removeItem("neonverseUser")
+      localStorage.removeItem("userCards")
       navigate("/login")
-    )
+    }
+      
+      
+    
 
     localStorage.setItem("changes_made", "0")
   };
@@ -51,7 +59,7 @@ export function Header() {
       fetchCards();
     }
     getCards()
-  }, [])
+  }, [email])
 
 
 
@@ -66,7 +74,7 @@ export function Header() {
           <button className="addPost" style={{ color: loadingApi ? "red" : "green" }} onClick={() => dispatch(setRatio(2))}>+</button>
         </Link>
 
-        <Link onClick={() => dispatch(setDropDownMenu())} className="avatarWraper"><img className="Avatar" src="/userAvatar3.png"></img></Link>
+        <Link onClick={() => dispatch(setDropDownMenu())} className="avatarWraper"><img className="Avatar" src={avatar_url || "userAvatar3.png"}></img></Link>
         <DropDown />
       </div>
     </>

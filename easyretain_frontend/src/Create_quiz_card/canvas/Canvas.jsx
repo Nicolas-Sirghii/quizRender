@@ -168,7 +168,7 @@ export function ImageCanvasEditor() {
           backgroundSize: "contain",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
-          borderRadius: "6px"
+          borderRadius: "3px"
         }}
       >
         {rects.map((r) => (

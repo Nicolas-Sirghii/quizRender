@@ -65,7 +65,9 @@ async def update_profile(
     # 📤 Upload to S3 if image exists
     if avatar:
         file_extension = avatar.filename.split(".")[-1]
-        filename = f"{uuid.uuid4()}.{file_extension}"
+        # filename = f"{uuid.uuid4()}.{file_extension}"
+        safe_email = email.replace("@", "_").replace(".", "_")
+        filename = f"users/{safe_email}/avatar.{file_extension}"
 
         s3.upload_fileobj(
             avatar.file,

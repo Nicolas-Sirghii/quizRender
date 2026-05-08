@@ -328,7 +328,7 @@ export function Profile() {
 
       {/* SAVE BUTTON */}
       <button className="create-profile" onClick={handleSaveProfile}>
-        {loading ? "Saving..." : "CREATE PROFILE"}
+        {loading ? "Saving..." : "SAVE PROFILE"}
       </button>
 
       {/* POPUP */}

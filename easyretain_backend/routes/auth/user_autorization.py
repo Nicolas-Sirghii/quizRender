@@ -9,7 +9,8 @@ from email.message import EmailMessage
 import hashlib
 import os
 
-from credentials.credentials import sql_conn, working_url, secret_key, email_address, email_password
+from credentials.credentials import (sql_conn, working_url, secret_key,
+                                     email_address, email_password, aws_bucket_name, s3_aws)
 
 
 # ===== Config =====
@@ -78,13 +79,17 @@ def send_email(to_email: str, subject: str, body: str):
 async def register_user(request: Request):
     data = await request.json()
 
-    password = data['password']
-    email = data['email']
+    password = data["password"]
+    email = data["email"]
 
     db = sql_conn()
     cursor = db.cursor()
 
-    cursor.execute(f"SELECT id FROM users WHERE email='{email}';")
+    # safer query (avoid f-string SQL)
+    cursor.execute(
+        "SELECT id FROM users WHERE email = %s",
+        (email,)
+    )
 
     if cursor.fetchone():
         cursor.close()
@@ -106,24 +111,89 @@ async def register_user(request: Request):
     cursor.close()
     db.close()
 
-    return {"message": f" {email} registered successfully!"}
-#...................................................................................
+    # No need to create a real folder in S3.
+    # Just use this prefix later when uploading files:
+    # users/{email}/avatar.png
+
+    return {
+        "message": f"{email} registered successfully!",
+        "s3_folder": f"users/{email}/"
+    }
+
+
+# ...................................................................................
+
 def get_user_id(request: Request):
     auth = request.headers.get("Authorization")
     token = auth.split(" ")[1]
     payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
     return payload["user_id"]
 
+
 @user_auth_router.delete("/delete-account")
 def delete_account(request: Request):
-    user_id = get_user_id(request)# extracted from JWT
-    print(user_id)
+    user_id = get_user_id(request)
 
     conn = sql_conn()
     cursor = conn.cursor()
 
     try:
-        # delete user (CASCADE handles posts, media, comments)
+        # -------------------------
+        # GET USER EMAIL
+        # -------------------------
+        cursor.execute("""
+            SELECT email
+            FROM users
+            WHERE id = %s
+        """, (user_id,))
+
+        user = cursor.fetchone()
+
+        if not user:
+            return JSONResponse(
+                status_code=404,
+                content={"detail": "User not found"}
+            )
+
+        email = user[0]
+
+        # VERY IMPORTANT:
+        # must match upload endpoint exactly
+        safe_email = email.replace("@", "_").replace(".", "_")
+
+        # this must match:
+        # users/{safe_email}/cards/...
+        prefix = f"users/{safe_email}/"
+
+        # -------------------------
+        # DELETE ALL S3 FILES
+        # -------------------------
+        s3 = s3_aws()
+
+        response = s3.list_objects_v2(
+            Bucket=aws_bucket_name(),
+            Prefix=prefix
+        )
+
+
+        if "Contents" in response:
+            objects_to_delete = [
+                {"Key": obj["Key"]}
+                for obj in response["Contents"]
+            ]
+
+
+            s3.delete_objects(
+                Bucket=aws_bucket_name(),
+                Delete={
+                    "Objects": objects_to_delete
+                }
+            )
+
+
+        # -------------------------
+        # DELETE USER FROM DB
+        # -------------------------
         cursor.execute("""
             DELETE FROM users
             WHERE id = %s
@@ -131,7 +201,10 @@ def delete_account(request: Request):
 
         conn.commit()
 
-        return {"message": "Account deleted successfully"}
+        return {
+            "message": "Account deleted successfully",
+            "deleted_s3_folder": prefix
+        }
 
     except Exception as e:
         conn.rollback()
@@ -140,8 +213,6 @@ def delete_account(request: Request):
     finally:
         cursor.close()
         conn.close()
-
-
 #...................................................................................
 
 @user_auth_router.post("/login")

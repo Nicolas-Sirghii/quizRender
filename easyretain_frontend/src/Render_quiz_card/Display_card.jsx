@@ -78,7 +78,7 @@ export function CardElement({
     
     dispatch(answerMessage({ cardId, id }))
 
-    if ((data[0].rects.length == 1) && (data[0].rects[0].answer.toLowerCase() == answers[index].toLowerCase())) {
+    if ((data[0].rects.length == 1) && (data[0].rects[index].answer.toLowerCase() == answers[index].toLowerCase())) {
 
       dispatch(setRight(cardId))
       
@@ -89,7 +89,8 @@ export function CardElement({
       }, 4000);
 
     }else {
-      if(data[0].rects[0].answer.toLowerCase() != answers[index].toLowerCase()){
+
+      if(data[0].rects[index].answer.toLowerCase() != answers[index].toLowerCase()){
         updateCardStats(card.id, "wrong")
       }
       

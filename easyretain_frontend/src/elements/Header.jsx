@@ -71,7 +71,7 @@ export function Header() {
   }
   return (
     <>
-      <div className="apiLink" onClick={() => dispatch(changePath())}>{path}</div>
+      {/* <div className="apiLink" onClick={() => dispatch(changePath())}>{path}</div> */}
       <div className="header">
         <Link to="/" onClick={() => dispatch(clearEverything())}>
           <img className="logo" src="/logo.png" alt="" />

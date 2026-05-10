@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Display_card_styles.css"
 import { useNavigate } from "react-router-dom";
 
@@ -21,6 +21,36 @@ export function CardElement({
   const { path } = useSelector((state) => state.path);
   // const card = cards[0]
 
+  const updateCardStats = async (cardId, result) => {
+  try {
+    const token = localStorage.getItem("jwt");
+
+    const formData = new FormData();
+    formData.append("card_id", cardId);
+    formData.append("result", result); // "right" or "wrong"
+
+    const response = await fetch(`${path}/cards/update-stats`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.detail || "Failed to update card stats");
+    }
+
+    console.log("Stats updated successfully:", data);
+
+    return data;
+  } catch (error) {
+    console.error("Update stats error:", error.message);
+  }
+};
+
   const [expanded, setExpanded] = useState(false);
   const [answers, setAnswers] = useState(["", "", ""]);
   const [color, setColor] = useState("#111")
@@ -33,18 +63,36 @@ export function CardElement({
 
   const handleSubmit = (index, id, cardId) => {
 
+    console.log(card)
+
     const data = cards.filter((el) => {
       return el.id == cardId
     })
+
+    console.log(data[0].rects[0].answer.toLowerCase())
+    console.log(answers[index].toLowerCase())
+
+
+    //......................................
+
+    
     dispatch(answerMessage({ cardId, id }))
 
     if ((data[0].rects.length == 1) && (data[0].rects[0].answer.toLowerCase() == answers[index].toLowerCase())) {
+
       dispatch(setRight(cardId))
       
       setColor("grey")
       setTimeout(() => {
+        updateCardStats(card.id, "right")
         dispatch(setDeleteCard(cardId))
       }, 4000);
+
+    }else {
+      if(data[0].rects[0].answer.toLowerCase() != answers[index].toLowerCase()){
+        updateCardStats(card.id, "wrong")
+      }
+      
 
     }
 
@@ -76,55 +124,32 @@ export function CardElement({
 
   // FRONTEND (JS)
 
-const updateCardStats = async (cardId, result) => {
-  try {
-    const token = localStorage.getItem("jwt");
-
-    const formData = new FormData();
-    formData.append("card_id", cardId);
-    formData.append("result", result); // "right" or "wrong"
-
-    const response = await fetch(`${path}/cards/update-stats`, {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      body: formData,
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.detail || "Failed to update card stats");
-    }
-
-    console.log("Stats updated successfully:", data);
-
-    return data;
-  } catch (error) {
-    console.error("Update stats error:", error.message);
-  }
-};
 
 
 
 
 
-  function rightAnswer() {
-    updateCardStats(card.id, "right")
-  }
-  function wrongAnswer() {
-    updateCardStats(card.id, "wrong")
-  }
+
+  // function rightAnswer() {
+  //   updateCardStats(card.id, "right")
+  // }
+  // function wrongAnswer() {
+  //   updateCardStats(card.id, "wrong")
+  // }
 
 
+// useEffect(() => {
+//   rightSend && rightAnswer()
+//   wrongSend && wrongAnswer()
+//   console.log(rightSend)
+   
+//     dispatch(setSend())
+  
 
+// }, [wrongSend])
 
-  rightSend && rightAnswer()
-  wrongSend && wrongAnswer()
-  setTimeout(() => {
-    dispatch(setSend())
-  }, 500);
+  
+ 
 
 
   return (

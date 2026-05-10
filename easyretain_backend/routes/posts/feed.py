@@ -57,7 +57,7 @@ async def get_feed(
     cursor.execute(f"""
         SELECT *
         FROM card_rects
-        WHERE card_id IN ({format_strings})
+        WHERE card_id IN ({format_strings}) ORDER BY num 
     """, tuple(card_ids))
 
     rects = cursor.fetchall()

@@ -143,7 +143,7 @@ export function ImageCanvasEditor() {
       style={{ position: "relative"}}
       onDoubleClick={overlayMode}
     >
-      {cover && <div style={{width: "100%", height: "100%", position: "absolute", zIndex: "999", backgroundColor: "grey", opacity: "0.5" }}></div>}
+      {cover && <div style={{width: "100%", height: "100%", position: "absolute", zIndex: "900", backgroundColor: "grey", opacity: "0.5" }}></div>}
       
      {!updateCard && <input type="file" className="fileInput"  onChange={handleImage} />}  
       

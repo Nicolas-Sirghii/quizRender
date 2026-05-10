@@ -20,7 +20,11 @@ const cardSlice = createSlice({
     updateCard: false,
     updateCardId: null,
     dropDownMenu: false,
-    rId: ""
+    rId: "",
+
+
+    wrongSend: false,
+    rightSend: false
   },
   reducers: {
     update1: (state) => {
@@ -156,10 +160,12 @@ const cardSlice = createSlice({
           if (deletedSomething) {
             state.questionPopup = false;
             state.questionPopupMessage = "";
+            
           } else {
-            console.log("Nothing matched");
             state.rightAnswerPopup = true;
             elem.wrong += 1;
+            state.wrongSend = true;
+            
           }
         }
 
@@ -185,13 +191,18 @@ const cardSlice = createSlice({
       localStorage.setItem("userCards", JSON.stringify(state.cards));
 
     },
+    setSend: (state) => {
+      state.wrongSend = false;
+      state.rightSend = false;
+    },
     setRight: (state, action) => {
 
       state.cards.map((elem) => {
         if (elem.id == action.payload)
           elem.right = elem.right + 1
+        
+        state.rightSend = true;
       })
-      console.log("right")
     state.questionPopup = false;
     state.questionPopupMessage = "";
     },
@@ -234,7 +245,13 @@ const cardSlice = createSlice({
       state.updateCard = true;
       state.updateCardId = action.payload
       state.ratio = a[0].ratio;
+
+
+      // console.log(state.rects);
+     
     },
+
+    
 
     createCard: (state, action) => {
       state.cards = [action.payload, ...state.cards];
@@ -246,6 +263,8 @@ const cardSlice = createSlice({
       state.updateCard = false;
       state.image = null;
       localStorage.setItem("userCards", JSON.stringify(state.cards));
+      // console.log(JSON.parse(JSON.stringify(state.updateCardId)));
+      // console.log(JSON.parse(JSON.stringify(action.payload.rects)));
     },
     setDeletePopup: (state, action) => {
       const {status, id} = action.payload;
@@ -287,6 +306,6 @@ export const { increment, setImage, setRatio, setAddRect, setModifyRect,
   setFilterRect, setUpdateField, setActiveId, setAnswer, setQuestionPopup,
   setDeleteCard, setRight, setRightAnswer, answerMessage, deleteCard, deleteLast, setCount, updateElem,
   createCard, updateExist, clearCreate, setDeletePopup, setDropDownMenu, appendCards, setCards,
-  clearCards, setLoadingApi,clearEverything, update1
+  clearCards, setLoadingApi,clearEverything, update1, setSend
 } = cardSlice.actions;
 export default cardSlice.reducer;

@@ -46,7 +46,7 @@ import "./Feed.css"
 
 export function Feed() {
   const dispatch = useDispatch();
-  const cards = useSelector((state) => state.card_state.cards);
+  const {cards, deleteId} = useSelector((state) => state.card_state);
   const { path } = useSelector((state) => state.path);
   useEffect(() => {
     if (cards.length == 0) {
@@ -114,16 +114,47 @@ export function Feed() {
     fetchCards(newOffset);
   };
 
+   const deleteCard = async () => {
+        try {
+          const token = localStorage.getItem("jwt");
+  
+          const response = await fetch(`${path}/cards/delete/${deleteId}`, {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+  
+          const data = await response.json();
+  
+          if (!response.ok) {
+            throw new Error(data.detail || "Failed to delete card");
+          }
+  
+          console.log("Deleted successfully:", data);
+          dispatch(setDeletePopup({ status: "delete", id: null }))
+  
+          // optional: remove from local state
+          // example if using setCards:
+          // setCards((prev) => prev.filter(card => card.id !== cardId));
+  
+          return data;
+        } catch (error) {
+          console.error("Delete error:", error.message);
+        }
+      };
+     
+
   return (
     <div className="feed-container">
 
 
 
-      {questionPopup && <div className="quiestion-popup" onClick={() => dispatch(setQuestionPopup({ set: 0 }))}>{questionPopupMessage}</div>}
+      {questionPopup && <div className="quiestion-popup" onClick={() => dispatch(setQuestionPopup({ set: 0 }))}>{questionPopupMessage} <p className="question-click-click-to-close">Click to close</p></div>}
       {rightAnswerPopup && <div className="right-answer-popup">{rightAnswer}</div>}
       {
         deletePopup && <div className="delete-popup">
-          <button className="btn delete" onClick={() => dispatch(setDeletePopup({ status: "delete", id: null }))}>Delete</button>
+          <button className="btn delete" onClick={deleteCard}>Delete</button>
           <button className="btn solve" onClick={() => dispatch(setDeletePopup({ status: "close", id: null }))}>Cancel</button>
         </div>
       }
